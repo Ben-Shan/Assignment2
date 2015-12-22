@@ -7,9 +7,16 @@ import ddf.minim.effects.*;
 
 
 AudioPlayer player;
-Minim minim;//audio context
+Minim minim;
 
 
+ArrayList<WormMan> wormMans = new ArrayList<WormMan>();
+
+/*Memories can be good things, but also be bad, use them as a pick up, when feeling sad. But memories, if left, to fester and stew can lead to depression, 
+ cause problems for you. Memories can be useful, can help you to grow, but there's one other thing that's important to know. Memories are memories, things
+ of the past, memories weren't ment as things that will last, don't dwell on a memory, you must set it free, or soon you will realise, soon you will see.
+ A memory held onto can ruin your life, a memory not memory causes all kinds of strife. Heed to my warning, to avoid this hell, 
+ live life to the full and don't let memories DWELL */
 
 void setup()
 {
@@ -17,6 +24,9 @@ void setup()
 
   minim = new Minim(this);
   player = minim.loadFile("Gamemusic.mp3", 2048);
+
+  WormMan wormMan = new WormMan();
+  wormMans.add(wormMan);
 }
 
 
@@ -63,7 +73,7 @@ void drawText()
   text("Press spacebar to alter gravity", width/2, height/4);
 }
 
-int which=0;
+int which=1;
 boolean fade;
 int textOp=200;
 int CMOp=0;
@@ -83,26 +93,57 @@ void draw()
   {
     if (key == ENTER)
     {
-      which=1;
+      which=2;
     }
   }
 
-  if (which==0)
+
+  //  if (which==0)
+  //  {
+  //    int logofade;
+  //    background(0);
+  //    int i;
+  //
+  //      logofade=i;
+  //      if(i==0)
+  //
+  //        which=1;
+  //
+  //     
+  //    }
+  //      ellipseMode(CENTER);
+  //      fill(255);
+  //      ellipse(width/2, height/2, 200, 200);
+  //    
+  //    PImage logo;
+  //    imageMode(CENTER);
+  //    logo=loadImage("logo.png");
+  //    image(logo, width/2, height/2, 200, 200);
+  //  }
+  if (which==1)
   {
     PFont font;
     font=createFont("Ailerons.ttf", 32);
 
     PImage bg;
-    bg = loadImage("GameMenuSize.jpg");
+    if (xAxis==1000)
+    {
+      bg = loadImage("GameMenuSize.jpg");
+      background(bg);
+    }
+    if (xAxis==2000)
+    {
+      bg = loadImage("GameMenu.jpg");
+      background(bg);
+    }
 
-    background(bg);
-    
-    
+
+
     textAlign(CENTER);
     noStroke();
     textFont(font);
     smooth();
-    textSize(72);
+    textSize(xAxis/14);
     fill(100, 0, 0);
     text("-dwelling-", width/2, height*49/50);
 
@@ -125,11 +166,11 @@ void draw()
     fill(0, MOp);
     rect(0, 0, width*9/30, height);
     rect(width*41/60, 0, width*9/30, height);
-    rect(0,height-height/8,width,height);
+    rect(0, height-height/8, width, height);
 
 
 
-    textSize(32);
+    textSize(xAxis/30);
     textAlign(CENTER);
     noStroke();
     textFont(font);
@@ -137,51 +178,15 @@ void draw()
     float Op=random(0, 255)-100;
     fill(255, Op);
     text("Press Enter to start:", width/2, height/4);
-
-
-    //    float SpotFade=20;
-    //    noStroke();
-    //    for (int i=0; i<width/2; i+=15)
-    //    {
-    //
-    //      fill(255, SpotFade);
-    //      ellipseMode(CENTER);
-    //      ellipse(width/2, height*3/4, i, height/5);
-    //    }
-    //    rectMode(CENTER);
-    //    float SOpB=random(0, 1);
-    //    int SOp=200;
-    //    if (SOpB==0)
-    //    {
-    //      SOp=0;
-    //    } else if (SOpB==1)
-    //    {
-    //      SOp=200;
-    //    }
-    //    fill(0, SOp);
-    //    rect(width/2, height*3/4, width/2, height/5);
-    //
-    //    fill(250);
-    //
-    //    rectMode(CENTER);
-    //    rect(width/2, height*2/3, headSize*3, headSize*3, 10);
-    //
-    //    fill(0);
-    //    smooth();
-    //    noStroke();
-    //    ellipse(width*19/40, height*25/40, width/60, width/60);
-    //    arc(width*21/40, height*25/40, width/60, width/60, 0, PI+HALF_PI, CHORD);
-    //    fill(255);
-    //    noStroke();
-    //    arc(width*19/40, height*25/40, width/56, width/56, PI, PI+HALF_PI, CHORD);
   }
 
 
 
-  if (which==1)
+  if (which==2)
   {
+    background(0, 0, 0);
     noStroke();
-    fill(50, 0, 0);
+    fill(80, 0, 0);
     rectMode(CORNER);
     rect(0, 0, width, yAxis/12);
     rect(0, height-(yAxis/12), width, yAxis/10);
@@ -215,6 +220,13 @@ void draw()
         tailPosx-=2;
       }
       up=true;
+    }
+
+    for (int i = wormMans.size () - 1; i >= 0; i --)
+    {
+      WormMan go =wormMans.get(i);
+      go.update();
+      go.render();
     }
   }
 }
