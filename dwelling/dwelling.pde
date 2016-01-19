@@ -15,8 +15,8 @@ ArrayList<WormMan> wormMans = new ArrayList<WormMan>();
 /*Memories can be good things, but also be bad, use them as a pick up, when feeling sad. But memories, if left, to fester and stew can lead to depression, 
  cause problems for you. Memories can be useful, can help you to grow, but there's one other thing that's important to know. Memories are memories, things
  of the past, memories weren't ment as things that will last, don't dwell on a memory, you must set it free, or soon you will realise, soon you will see.
- A memory held onto can ruin your life, a memory not memory causes all kinds of strife. Heed to my warning, to avoid this hell, 
- live life to the full and don't let memories DWELL */
+ A memory held onto can ruin your life, a memory not memory causes all kinds of strife. Heed to my warning, avoid this hell, 
+ live life to the full and don't let yourself DWELL */
 
 void setup()
 {
@@ -35,18 +35,12 @@ int yAxis=xAxis/2;
 
 boolean up=true;
 boolean jump=true;
+boolean dead=false;
 
 
 int headSize=yAxis/12;
 int headPos=height*16/20;
 
-int bodySize=headSize*2/3;
-int bodyPosx=width/2-(xAxis/30);
-int bodyPosy=headPos+(xAxis/100);
-
-int tailSize=headSize*1/3;
-int tailPosx=bodyPosx-(xAxis/45);
-int tailPosy=headPos+(xAxis/60);
 
 void drawWorm()
 {
@@ -55,8 +49,6 @@ void drawWorm()
   fill(255);
   noStroke();
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
-  rect(bodyPosx, bodyPosy, bodySize, bodySize, 2);
-  rect(tailPosx, tailPosy, tailSize, tailSize, 1);
 }
 void drawText()
 {
@@ -191,9 +183,9 @@ void draw()
     rect(0, 0, width, yAxis/12);
     rect(0, height-(yAxis/12), width, yAxis/10);
 
-    //drawText(); //Messes with the jumping :(
-    drawWorm();
 
+    drawWorm();
+    //drawText(); //Messes with the jumping :(
 
 
     if (jump==false&&headPos>height*2/20)
@@ -205,22 +197,6 @@ void draw()
       headPos+=5;
     }
 
-    if (up==true)
-    {
-      for (int i=0; i<5; i++)
-      {
-        tailPosx+=2;
-      }
-      up=false;
-    }
-    if (up==false)
-    {
-      for (int i=0; i<5; i++)
-      {
-        tailPosx-=2;
-      }
-      up=true;
-    }
 
     for (int i = wormMans.size () - 1; i >= 0; i --)
     {
@@ -228,6 +204,11 @@ void draw()
       go.update();
       go.render();
     }
+    
+//    if(headPos==BadheadPosx)
+//    {
+//      dead=true;
+//    }
   }
 }
 

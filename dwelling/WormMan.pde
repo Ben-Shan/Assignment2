@@ -18,14 +18,19 @@ class WormMan
   int BadtailPosx;
   int BadtailPosy=BadheadPosy;
 
+  int Wormspeed=2;
 
 
 
   void update()
   {
-    if (BadheadPosx>-10)
+    if (BadheadPosx>-55)
     {
-      BadheadPosx-=.1;
+      BadheadPosx-=Wormspeed;
+    }
+    if(BadheadPosx<-55)
+    {
+      BadheadPosx=width;
     }
 
     BadbodyPosx=BadheadPosx+(xAxis/25);
