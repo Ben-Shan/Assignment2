@@ -3,12 +3,12 @@ class WormMan
 
   boolean up=false;
   
-  int BadheadSize=yAxis/12;
-  int BadheadPosy=height*17/20;
-  int BadheadPosx=width;
+  int BadheadSize;
+  int BadheadPosy;
+  int BadheadPosx;
 
-  int headTop=height*17/20+yAxis/30;
-  int headBottom=height*17/20-yAxis/30;
+  int headTop;
+  int headBottom;
 
   int BadbodySize=BadheadSize*2/3;
   int BadbodyPosx;
@@ -18,7 +18,19 @@ class WormMan
   int BadtailPosx;
   int BadtailPosy=BadheadPosy;
 
-  int Wormspeed=2;
+  int Wormspeed;
+  
+    WormMan(int BadheadSize, int BadheadPosy, int BadheadPosx, int Wormspeed, int headTop, int headBottom)
+  {
+
+    this.BadheadSize = BadheadSize;
+    this.BadheadPosy = BadheadPosy;
+    this.BadheadPosx = BadheadPosx;
+    this.Wormspeed = Wormspeed;
+    this.headTop = headTop;
+    this.headBottom = headBottom;
+
+  }
 
 
 

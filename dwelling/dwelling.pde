@@ -11,12 +11,24 @@ Minim minim;
 
 
 ArrayList<WormMan> wormMans = new ArrayList<WormMan>();
+ArrayList<Skull> skulls = new ArrayList<Skull>();
 
 /*Memories can be good things, but also be bad, use them as a pick up, when feeling sad. But memories, if left, to fester and stew can lead to depression, 
  cause problems for you. Memories can be useful, can help you to grow, but there's one other thing that's important to know. Memories are memories, things
  of the past, memories weren't ment as things that will last, don't dwell on a memory, you must set it free, or soon you will realise, soon you will see.
  A memory held onto can ruin your life, a memory not memory causes all kinds of strife. Heed to my warning, avoid this hell, 
  live life to the full and don't let yourself DWELL */
+
+
+//-------------------------------------------------
+int quantity = 30;
+float [] xPosition = new float[quantity];
+float [] yPosition = new float[quantity];
+int [] BlockSize = new int[quantity];
+int [] direction = new int[quantity];
+int minBlock = 5;
+int maxBlock = 25;
+//-------------------------------------------------
 
 void setup()
 {
@@ -25,8 +37,20 @@ void setup()
   minim = new Minim(this);
   player = minim.loadFile("Gamemusic.mp3", 2048);
 
-  WormMan wormMan = new WormMan();
+  WormMan wormMan = new WormMan(yAxis/12,height*17/20,width,5, height*17/20+yAxis/30, height*17/20-yAxis/30);
   wormMans.add(wormMan);
+
+  Skull skull = new Skull(width,255,2);
+  skulls.add(skull);
+  //-------------------------------------------------
+  for (int i = 0; i < quantity; i++) 
+  {
+    BlockSize[i] = round(random(minBlock, maxBlock));
+    yPosition[i] = random(0, width);
+    xPosition[i] = random(0, height);
+    direction[i] = round(random(0, 1));
+  }
+  //-------------------------------------------------
 }
 
 
@@ -177,11 +201,36 @@ void draw()
   if (which==2)
   {
     background(0, 0, 0);
+
     noStroke();
-    fill(80, 0, 0);
-    rectMode(CORNER);
-    rect(0, 0, width, yAxis/12);
-    rect(0, height-(yAxis/12), width, yAxis/10);
+
+
+    //-------------------------------------------------------------
+    for (int i = 0; i < xPosition.length; i++) 
+
+    {
+      fill(round(random(0, 80)), 0, 0);
+      rect(yPosition[i], xPosition[i], BlockSize[i], BlockSize[i]);
+
+      if (direction[i] == 0) {
+        yPosition[i] += map(BlockSize[i], minBlock, maxBlock, .1, .5);
+      } else {
+        yPosition[i] -= map(BlockSize[i], minBlock, maxBlock, .1, .5);
+      }
+
+      yPosition[i] += 3 + direction[i]; 
+
+      if (yPosition[i] > width + BlockSize[i] || yPosition[i] < +BlockSize[i] || xPosition[i] > height + BlockSize[i])
+      {
+        xPosition[i] = random(0, height);
+        yPosition[i] = +BlockSize[i];
+      }
+      //--------------------------------
+      fill(80, 0, 0);
+      rectMode(CORNER);
+      rect(0, 0, width, yAxis/12);
+      rect(0, height-(yAxis/12), width, yAxis/10);
+    }
 
 
     drawWorm();
@@ -204,11 +253,18 @@ void draw()
       go.update();
       go.render();
     }
-    
-//    if(headPos==BadheadPosx)
-//    {
-//      dead=true;
-//    }
+
+    for (int i = skulls.size () - 1; i >= 0; i --)
+    {
+      Skull go =skulls.get(i);
+      go.update();
+      go.render();
+    }
+
+    //    if(headPos==BadheadPosx)
+    //    {
+    //      dead=true;
+    //    }
   }
 }
 
