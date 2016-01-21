@@ -166,6 +166,11 @@ void draw()
       which=2;
     }
   }
+  
+  if(headPos==BadheadPosy)
+  {
+    which=1;
+  }
 
 
   //  if (which==0)
