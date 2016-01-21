@@ -30,6 +30,12 @@ int minBlock = 5;
 int maxBlock = 25;
 //-------------------------------------------------
 
+int randWorm;
+boolean wormSpawn=false;
+boolean wormSpawn2=false;
+
+int randSkull;
+boolean skullSpawn=false;
 void setup()
 {
   size(xAxis, yAxis);
@@ -37,10 +43,7 @@ void setup()
   minim = new Minim(this);
   player = minim.loadFile("Gamemusic.mp3", 2048);
 
-  WormMan wormMan = new WormMan(yAxis/12,height*17/20,width,5, height*17/20+yAxis/30, height*17/20-yAxis/30);
-  wormMans.add(wormMan);
-
-  Skull skull = new Skull(width,255,2);
+  Skull skull = new Skull(width, 255, 2);
   skulls.add(skull);
   //-------------------------------------------------
   for (int i = 0; i < quantity; i++) 
@@ -96,6 +99,57 @@ int CMOp=0;
 int MOp=0;
 void draw()
 {
+  //------------------------------------------------Worm Generating-------------------------------------------------------
+  randWorm=round(random(1, 45 )); // RANDOM WORM
+  if (randWorm==1)
+  {
+    wormSpawn=true;
+  }
+  if (randWorm!=1)
+  {
+    wormSpawn=false;
+  }
+
+  if (wormSpawn==true)
+  {
+    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, 5, height*17/20+yAxis/30, height*17/20-yAxis/30);
+    wormMans.add(wormMan);
+  }
+  
+    if (randWorm==2)
+  {
+    wormSpawn2=true;
+  }
+  if (randWorm!=2)
+  {
+    wormSpawn2=false;
+  }
+
+  if (wormSpawn2==true)
+  {
+    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, 5, height*13/20+yAxis/30, height*13/20-yAxis/30);
+    wormMans.add(wormMan);
+  }
+
+  //------------------------------------------------Skull Generating-------------------------------------------------------
+  randSkull=round(random(1, 1000 )); // RANDOM SKULL
+  if (randSkull==999)
+  {
+    skullSpawn=true;
+  }
+  if (randSkull!=999)
+  {
+    skullSpawn=false;
+  }
+
+
+  if (skullSpawn==true)
+  {
+    Skull skull = new Skull(width, 255, 2);
+    skulls.add(skull);
+  }
+
+
   frameRate(60);
   if (player.isPlaying()==false)
   {
@@ -239,11 +293,11 @@ void draw()
 
     if (jump==false&&headPos>height*2/20)
     {
-      headPos-=5;
+      headPos-=10;
     }
     if (jump==true&&headPos<height*16/20)
     {
-      headPos+=5;
+      headPos+=10;
     }
 
 

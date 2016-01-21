@@ -11,11 +11,11 @@ class WormMan
   int headBottom;
 
   int BadbodySize=BadheadSize*2/3;
-  int BadbodyPosx;
+  int BadbodyPosx=BadbodyPosx=BadheadPosx+(xAxis/25);
   int BadbodyPosy=BadheadPosy;
 
   int BadtailSize=BadheadSize*1/3;
-  int BadtailPosx;
+  int BadtailPosx=BadtailPosx=BadheadPosx+(xAxis/15);
   int BadtailPosy=BadheadPosy;
 
   int Wormspeed;
@@ -29,6 +29,9 @@ class WormMan
     this.Wormspeed = Wormspeed;
     this.headTop = headTop;
     this.headBottom = headBottom;
+//    this.BadbodySize=BadbodySize;
+//    this.BadbodyPosx=BadbodyPox;
+//    this.BadbodyPosy=BadbodyPosy;
 
   }
 
@@ -36,18 +39,18 @@ class WormMan
 
   void update()
   {
-    if (BadheadPosx>-55)
-    {
+    //if (BadheadPosx>-55)
+    //{
       BadheadPosx-=Wormspeed;
-    }
-    if(BadheadPosx<-55)
-    {
-      BadheadPosx=width;
-    }
+    //}
+//    if(BadheadPosx<-55)
+//    {
+//      BadheadPosx=width;
+//    }
 
-    BadbodyPosx=BadheadPosx+(xAxis/25);
+    //BadbodyPosx=BadheadPosx+(xAxis/25);
 
-    BadtailPosx=BadheadPosx+(xAxis/15);
+    //BadtailPosx=BadheadPosx+(xAxis/15);
   }
 
   void render()

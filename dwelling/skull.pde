@@ -23,14 +23,14 @@ class Skull
 
   void update()
   {
-    if (skullMove>-55)
-    {
+//    if (skullMove>-55)
+//    {
       skullMove-=skullSpeed;
-    }
-    if (skullMove<-55)
-    {
-      skullMove=width;
-    }
+//    }
+//    if (skullMove<-55)
+//    {
+//      skullMove=width;
+//    }
   }
   float skullRotate=0;
   int skullbounce=5;
