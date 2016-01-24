@@ -20,15 +20,15 @@ ArrayList<Skull> skulls = new ArrayList<Skull>();
  live life to the full and don't let yourself DWELL */
 
 
-//-------------------------------------------------
-int quantity = 30;
+//--------------------galaxy-----------------------------
+int quantity = 150;
 float [] xPosition = new float[quantity];
 float [] yPosition = new float[quantity];
 int [] BlockSize = new int[quantity];
 int [] direction = new int[quantity];
-int minBlock = 5;
-int maxBlock = 25;
-//-------------------------------------------------
+int minBlock = 1;
+int maxBlock = 5;
+//--------------------galaxy-----------------------------
 
 int randWorm;
 boolean wormSpawn=false;
@@ -45,7 +45,7 @@ void setup()
 
   Skull skull = new Skull(width, 255, 2);
   skulls.add(skull);
-  //-------------------------------------------------
+//--------------------galaxy-----------------------------
   for (int i = 0; i < quantity; i++) 
   {
     BlockSize[i] = round(random(minBlock, maxBlock));
@@ -53,7 +53,7 @@ void setup()
     xPosition[i] = random(0, height);
     direction[i] = round(random(0, 1));
   }
-  //-------------------------------------------------
+//--------------------galaxy-----------------------------
 }
 
 
@@ -99,8 +99,9 @@ int CMOp=0;
 int MOp=0;
 void draw()
 {
+  
   //------------------------------------------------Worm Generating-------------------------------------------------------
-  randWorm=round(random(1, 45 )); // RANDOM WORM
+  randWorm=round(random(1, 60 )); // RANDOM WORM
   if (randWorm==1)
   {
     wormSpawn=true;
@@ -127,7 +128,7 @@ void draw()
 
   if (wormSpawn2==true)
   {
-    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, 5, height*13/20+yAxis/30, height*13/20-yAxis/30);
+    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, 5, height*13/20+yAxis/30, height*13/20-yAxis/30 );
     wormMans.add(wormMan);
   }
 
@@ -167,10 +168,10 @@ void draw()
     }
   }
   
-  if(headPos==BadheadPosy)
-  {
-    which=1;
-  }
+//  if(headPos==BadheadPosy)
+//  {
+//    which=1;
+//  }
 
 
   //  if (which==0)
@@ -264,11 +265,12 @@ void draw()
     noStroke();
 
 
-    //-------------------------------------------------------------
+//--------------------galaxy-----------------------------
     for (int i = 0; i < xPosition.length; i++) 
 
     {
-      fill(round(random(0, 80)), 0, 0);
+      //fill(round(random(0, 80)), 0, 0);
+      fill(round(random(0, 180)));
       rect(yPosition[i], xPosition[i], BlockSize[i], BlockSize[i]);
 
       if (direction[i] == 0) {
@@ -284,8 +286,9 @@ void draw()
         xPosition[i] = random(0, height);
         yPosition[i] = +BlockSize[i];
       }
-      //--------------------------------
-      fill(80, 0, 0);
+//--------------------galaxy-----------------------------
+      //fill(80, 0, 0);
+      fill(80);
       rectMode(CORNER);
       rect(0, 0, width, yAxis/12);
       rect(0, height-(yAxis/12), width, yAxis/10);
@@ -311,7 +314,9 @@ void draw()
       WormMan go =wormMans.get(i);
       go.update();
       go.render();
+
     }
+
 
     for (int i = skulls.size () - 1; i >= 0; i --)
     {
@@ -324,6 +329,21 @@ void draw()
     //    {
     //      dead=true;
     //    }
+  }
+  
+  int s=0;
+  s=round(second());
+  text(60-s,50,height-10);
+  if(s==59)
+  {
+    dead=true;
+    s=0;
+  }
+  
+  
+  if(dead==true)
+  {
+    which=1;
   }
 }
 
