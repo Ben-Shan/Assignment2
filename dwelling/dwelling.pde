@@ -155,7 +155,7 @@ void draw()
   }
 
   //------------------------------------------------Add Time Generating-------------------------------------------------------  
-  randTime=round(random(1, 100 )); // RANDOM TimeBall
+  randTime=round(random(1, 500 )); // RANDOM TimeBall
   if (randTime==99)
   {
     timeSpawn=true;
@@ -359,15 +359,18 @@ void draw()
     //      dead=true;
     //    }
   }
-
-  int s=0;
-  s=round(second());
-  text(60-s, 50, height-10);
-  if (s==59)
-  {
-    dead=true;
-    s=0;
-  }
+//--------------TIMER-------------------
+//  int s=0;
+//  if (which==2)
+//  {
+//    s=round(second());
+//    text(60-s, 50, height-10);
+//    if (s==59)
+//    {
+//      dead=true;
+//      s=0;
+//    }
+//  }
 
 
   if (dead==true)
