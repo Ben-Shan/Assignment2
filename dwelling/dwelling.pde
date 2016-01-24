@@ -12,6 +12,7 @@ Minim minim;
 
 ArrayList<WormMan> wormMans = new ArrayList<WormMan>();
 ArrayList<Skull> skulls = new ArrayList<Skull>();
+ArrayList<Time> times = new ArrayList<Time>();
 
 /*Memories can be good things, but also be bad, use them as a pick up, when feeling sad. But memories, if left, to fester and stew can lead to depression, 
  cause problems for you. Memories can be useful, can help you to grow, but there's one other thing that's important to know. Memories are memories, things
@@ -36,6 +37,9 @@ boolean wormSpawn2=false;
 
 int randSkull;
 boolean skullSpawn=false;
+
+int randTime;
+boolean timeSpawn=false;
 void setup()
 {
   size(xAxis, yAxis);
@@ -45,7 +49,7 @@ void setup()
 
   Skull skull = new Skull(width, 255, 2);
   skulls.add(skull);
-//--------------------galaxy-----------------------------
+  //--------------------galaxy-----------------------------
   for (int i = 0; i < quantity; i++) 
   {
     BlockSize[i] = round(random(minBlock, maxBlock));
@@ -53,7 +57,7 @@ void setup()
     xPosition[i] = random(0, height);
     direction[i] = round(random(0, 1));
   }
-//--------------------galaxy-----------------------------
+  //--------------------galaxy-----------------------------
 }
 
 
@@ -99,7 +103,7 @@ int CMOp=0;
 int MOp=0;
 void draw()
 {
-  
+
   //------------------------------------------------Worm Generating-------------------------------------------------------
   randWorm=round(random(1, 60 )); // RANDOM WORM
   if (randWorm==1)
@@ -116,8 +120,8 @@ void draw()
     WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, 5, height*17/20+yAxis/30, height*17/20-yAxis/30);
     wormMans.add(wormMan);
   }
-  
-    if (randWorm==2)
+
+  if (randWorm==2)
   {
     wormSpawn2=true;
   }
@@ -150,6 +154,25 @@ void draw()
     skulls.add(skull);
   }
 
+  //------------------------------------------------Add Time Generating-------------------------------------------------------  
+  randTime=round(random(1, 100 )); // RANDOM TimeBall
+  if (randTime==99)
+  {
+    timeSpawn=true;
+  }
+  if (randTime!=99)
+  {
+    timeSpawn=false;
+  }
+
+
+  if (timeSpawn==true)
+  {
+    Time time = new Time(width, height/2, 2);
+    times.add(time);
+  }
+
+  //---
 
   frameRate(60);
   if (player.isPlaying()==false)
@@ -167,11 +190,11 @@ void draw()
       which=2;
     }
   }
-  
-//  if(headPos==BadheadPosy)
-//  {
-//    which=1;
-//  }
+
+  //  if(headPos==BadheadPosy)
+  //  {
+  //    which=1;
+  //  }
 
 
   //  if (which==0)
@@ -265,7 +288,7 @@ void draw()
     noStroke();
 
 
-//--------------------galaxy-----------------------------
+    //--------------------galaxy-----------------------------
     for (int i = 0; i < xPosition.length; i++) 
 
     {
@@ -286,7 +309,7 @@ void draw()
         xPosition[i] = random(0, height);
         yPosition[i] = +BlockSize[i];
       }
-//--------------------galaxy-----------------------------
+      //--------------------galaxy-----------------------------
       //fill(80, 0, 0);
       fill(80);
       rectMode(CORNER);
@@ -314,7 +337,6 @@ void draw()
       WormMan go =wormMans.get(i);
       go.update();
       go.render();
-
     }
 
 
@@ -325,23 +347,30 @@ void draw()
       go.render();
     }
 
+    for (int i = times.size () - 1; i >= 0; i --)
+    {
+      Time go =times.get(i);
+      go.update();
+      go.render();
+    }
+
     //    if(headPos==BadheadPosx)
     //    {
     //      dead=true;
     //    }
   }
-  
+
   int s=0;
   s=round(second());
-  text(60-s,50,height-10);
-  if(s==59)
+  text(60-s, 50, height-10);
+  if (s==59)
   {
     dead=true;
     s=0;
   }
-  
-  
-  if(dead==true)
+
+
+  if (dead==true)
   {
     which=1;
   }
