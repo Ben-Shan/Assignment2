@@ -13,6 +13,7 @@ Minim minim;
 ArrayList<WormMan> wormMans = new ArrayList<WormMan>();
 ArrayList<Skull> skulls = new ArrayList<Skull>();
 ArrayList<Time> times = new ArrayList<Time>();
+ArrayList<Skull_bar> skull_bars = new ArrayList<Skull_bar>();
 
 /*Memories can be good things, but also be bad, use them as a pick up, when feeling sad. But memories, if left, to fester and stew can lead to depression, 
  cause problems for you. Memories can be useful, can help you to grow, but there's one other thing that's important to know. Memories are memories, things
@@ -40,12 +41,17 @@ boolean skullSpawn=false;
 
 int randTime;
 boolean timeSpawn=false;
+
+boolean pause=false;
 void setup()
 {
+
   size(xAxis, yAxis);
+
 
   minim = new Minim(this);
   player = minim.loadFile("Gamemusic.mp3", 2048);
+
 
   Skull skull = new Skull(width, 255, 2);
   skulls.add(skull);
@@ -172,7 +178,13 @@ void draw()
     times.add(time);
   }
 
-  //---
+  //------------------------------------------------Skull Icon Loader------------------------------------------------------- 
+
+  Skull_bar skull_bar = new Skull_bar(-100,height*2/3);
+  skull_bars.add(skull_bar);
+
+
+  //--------------------------
 
   frameRate(60);
   if (player.isPlaying()==false)
@@ -331,46 +343,58 @@ void draw()
       headPos+=10;
     }
 
-
-    for (int i = wormMans.size () - 1; i >= 0; i --)
+    if (pause==false)
     {
-      WormMan go =wormMans.get(i);
-      go.update();
-      go.render();
+      for (int i = wormMans.size () - 1; i >= 0; i --)
+      {
+        WormMan go =wormMans.get(i);
+        go.update();
+        go.render();
+      }
+
+
+      for (int i = skulls.size () - 1; i >= 0; i --)
+      {
+        Skull go =skulls.get(i);
+        go.update();
+        go.render();
+      }
+
+      for (int i = times.size () - 1; i >= 0; i --)
+      {
+        Time go =times.get(i);
+        go.update();
+        go.render();
+      }
     }
-
-
-    for (int i = skulls.size () - 1; i >= 0; i --)
+    
+    if(pause==true)
     {
-      Skull go =skulls.get(i);
-      go.update();
-      go.render();
+      
+            for (int i = skull_bars.size () - 1; i >= 0; i --)
+      {
+        Skull_bar go =skull_bars.get(i);
+        go.update();
+        go.render();
+      }
     }
-
-    for (int i = times.size () - 1; i >= 0; i --)
-    {
-      Time go =times.get(i);
-      go.update();
-      go.render();
-    }
-
     //    if(headPos==BadheadPosx)
     //    {
     //      dead=true;
     //    }
   }
-//--------------TIMER-------------------
-//  int s=0;
-//  if (which==2)
-//  {
-//    s=round(second());
-//    text(60-s, 50, height-10);
-//    if (s==59)
-//    {
-//      dead=true;
-//      s=0;
-//    }
-//  }
+  //--------------TIMER-------------------
+  //  int s=0;
+  //  if (which==2)
+  //  {
+  //    s=round(second());
+  //    text(60-s, 50, height-10);
+  //    if (s==59)
+  //    {
+  //      dead=true;
+  //      s=0;
+  //    }
+  //  }
 
 
   if (dead==true)
@@ -384,6 +408,10 @@ void keyPressed()
   if (key==' ')
   {
     jump=!jump;
+  }
+  if (key=='p')
+  {
+    pause=!pause;
   }
 }
 

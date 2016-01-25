@@ -4,8 +4,9 @@ class Time
   float timeMove;
   int timeSpeed;
   float timeBounce;
-  
+
   boolean timeUp=false;
+
 
   int expand;
   int expandOp;
@@ -15,6 +16,7 @@ class Time
     this.timeMove=timeMove;
     this.timeSpeed=timeSpeed;
   }
+
 
   void update()
   {
@@ -27,30 +29,32 @@ class Time
     {
       timeUp=false;
     }
-    if(timeUp==true)
+    if (timeUp==true)
     {
       timeBounce-=timeSpeed*2;
     }
-    if(timeUp==false)
+    if (timeUp==false)
     {
       timeBounce+=timeSpeed*2;
     }
   }
-  
-  
+
+
+
+
 
   void render()
   {
-    
-    fill(51,51,255,90);
-    stroke(51, 51, 255,95);
+
+    fill(51, 51, 255, 90);
+    stroke(51, 51, 255, 95);
     strokeWeight(2);
     ellipse(timeMove, timeBounce, 40, 40);
     noFill();
     stroke(51, 51, 255, expandOp);
     //fill(51,51,255,expandOp);
     strokeWeight(5);
-    ellipse(timeMove,timeBounce, expand, expand);
+    ellipse(timeMove, timeBounce, expand, expand);
     expand++;
     expandOp-=1;
     if (expand>100)
