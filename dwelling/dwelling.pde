@@ -7,6 +7,7 @@ import ddf.minim.effects.*;
 
 
 AudioPlayer player;
+AudioPlayer player1;
 Minim minim;
 
 
@@ -52,8 +53,12 @@ void setup()
 
 
   minim = new Minim(this);
-  player = minim.loadFile("Gamemusic.mp3", 2048);
+  player = minim.loadFile("Gamemusic.mp3", 1048);
 
+  minim = new Minim(this);
+  player1 = minim.loadFile("skullSound.wav", 4096);
+  player.setGain(0.0);
+  player1.setGain(10.0);
 
   Skull skull = new Skull(width, 255, 2);
   skulls.add(skull);
@@ -149,7 +154,7 @@ void draw()
   //  }
 
   //------------------------------------------------Skull Generating-------------------------------------------------------
-  randSkull=round(random(1, 1000 )); // RANDOM SKULL
+  randSkull=round(random(1, 2000 )); // RANDOM SKULL
   if (randSkull==999)
   {
     skullSpawn=true;
@@ -363,18 +368,18 @@ void draw()
     //      dead=true;
     //    }
   }
-  //--------------TIMER-------------------
-  //  int s=0;
-  //  if (which==2)
-  //  {
-  //    s=round(second());
-  //    text(60-s, 50, height-10);
-  //    if (s==59)
+  //  --------------TIMER-------------------
+  //    int s=0;
+  //    if (which==2)
   //    {
-  //      dead=true;
-  //      s=0;
+  //      s=round(second());
+  //      text(60-s, 50, height-10);
+  //      if (s==59)
+  //      {
+  //        dead=true;
+  //        s=0;
+  //      }
   //    }
-  //  }
 
   checkDetect();
   if (which==2)
@@ -384,61 +389,100 @@ void draw()
     {
       checkActivateSkull();
     }
+
+    skullText();
     if (dead==true)
     {
       which=1;
     }
   }
-
-  void keyPressed()
+}
+void keyPressed()
+{
+  if (key==' ')
   {
-    if (key==' ')
-    {
-      jump=!jump;
-    }
-    if (key=='p')
-    {
-      pause=!pause;
-    }
+    jump=!jump;
   }
-  void checkDetect()
+  if (key=='p')
   {
-    for (int i = wormMans.size () - 1; i >= 0; i --)
-    {
-      WormMan go =wormMans.get(i);
-      if (headPos>height*16/20-1&&go.BadheadPosx==width/2)
-      {
-        println("WORKING BOTTOM");
-        life-=20;
-        if (life==0)
-        {
-          dead=true;
-        }
-      }
-    }
+    pause=!pause;
+  }
+}
 
-    for (int i = skulls.size () - 1; i >= 0; i --)
+void checkDetect()
+{
+  for (int i = wormMans.size () - 1; i >= 0; i --)
+  {
+    WormMan go =wormMans.get(i);
+    if (headPos>height*16/20-1&&go.BadheadPosx==width/2)
     {
-      Skull go =skulls.get(i);
-      if (headPos<height/2+20&&headPos>height/2-20&&go.skullMove<width/2+20&&go.skullMove>width/2-20)
+      println("WORKING BOTTOM");
+      life-=20;
+      if (life==0)
       {
-        println("SKULL ACTIVATED!!");
-        skullActivated=true;
+        dead=true;
       }
     }
   }
-  void checkLife()
+
+  for (int i = skulls.size () - 1; i >= 0; i --)
   {
-    noStroke();
-    fill(85, 255, 0);
-    rectMode(CENTER);
-    rect(width/2, height*19/20, life, 10);
+    Skull go =skulls.get(i);
+    if (headPos<height/2+20&&headPos>height/2-20&&go.skullMove<width/2+20&&go.skullMove>width/2-20)
+    {
+      println("SKULL ACTIVATED!!");
+      skullActivated=true;
+      skulls.remove(i);
+    }
   }
+
+
+  for (int i = times.size () - 1; i >= 0; i --)
+  {
+    Time go =times.get(i);
+    if (go.timeMove<width/2+20&&go.timeMove>width/2-20&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
+    {
+      println("time collected");
+      times.remove(i);
+    }
+  }
+}
+void checkLife()
+{
+  noStroke();
+  fill(85, 255, 0);
+  rectMode(CENTER);
+  rect(width/2, height*19/20, life, 10);
+}
 int skullDelay=0;
-  void checkActivateSkull();
+int skullTextFade=0;
+void checkActivateSkull()
+{
+  if (player1.isPlaying()==false)
   {
-    if(skullDelay==1000)
-    {
-      
+    player1.rewind();
+    player1.play();
   }
+
+
+  if (skullDelay==250)
+  {
+    skullActivated=false;
+    skullDelay=0;
+    println("Skulls have returned");
+    skullTextFade=250;
+  }
+  skullDelay++;
+}
+void skullText()
+{
+  if (skullTextFade!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade);
+    textSize(32);
+    text("The Skulls have returned", width/2, height/2);
+    skullTextFade--;
+  }
+}
 

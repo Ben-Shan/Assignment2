@@ -58,6 +58,7 @@ class WormMan
     noStroke();
     rectMode(CENTER);
     rect(BadheadPosx, BadheadPosy, BadheadSize, BadheadSize);
+    rectMode(CORNER);
     rect(BadtailPosx, BadtailPosy, BadtailSize, BadtailSize);
     rect(BadbodyPosx, BadbodyPosy, BadbodySize, BadbodySize);
     stroke(255);
