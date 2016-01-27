@@ -55,7 +55,7 @@ class WormMan
   void render()
   {
     fill(100, 0, 0);
-    stroke(0);
+    noStroke();
     rectMode(CENTER);
     rect(BadheadPosx, BadheadPosy, BadheadSize, BadheadSize);
     rect(BadtailPosx, BadtailPosy, BadtailSize, BadtailSize);

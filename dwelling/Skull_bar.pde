@@ -2,6 +2,7 @@ class Skull_bar
 {
   float Iconx=-100;
   float Icony=height*2/3;
+  
 
   Skull_bar(float Iconx, float Icony)
   {
@@ -31,14 +32,15 @@ class Skull_bar
 //    popMatrix();
 //    IconRotate++;
   }
-
+  //int frameCounting=frameCount;
   void IconAnimation()
   {
+    
     if (Iconx<200)
     {
       Iconx+=5;
     }
-    if (Iconx>200&&frameCount>240)
+    if (Iconx>200&&frameCount==120)
     {
       Icony--;
     }

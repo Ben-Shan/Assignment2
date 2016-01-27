@@ -38,6 +38,8 @@ boolean wormSpawn2=false;
 
 int randSkull;
 boolean skullSpawn=false;
+boolean skullActivated=false;
+
 
 int randTime;
 boolean timeSpawn=false;
@@ -74,10 +76,13 @@ boolean up=true;
 boolean jump=true;
 boolean dead=false;
 
+int life=200;
 
 int headSize=yAxis/12;
 int headPos=height*16/20;
 
+//int headCentrex=width/2;
+//int headCentrey=headPos
 
 void drawWorm()
 {
@@ -85,6 +90,7 @@ void drawWorm()
 
   fill(255);
   noStroke();
+  rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
 }
 void drawText()
@@ -127,20 +133,20 @@ void draw()
     wormMans.add(wormMan);
   }
 
-  if (randWorm==2)
-  {
-    wormSpawn2=true;
-  }
-  if (randWorm!=2)
-  {
-    wormSpawn2=false;
-  }
-
-  if (wormSpawn2==true)
-  {
-    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, 5, height*13/20+yAxis/30, height*13/20-yAxis/30 );
-    wormMans.add(wormMan);
-  }
+  //  if (randWorm==2)
+  //  {
+  //    wormSpawn2=true;
+  //  }
+  //  if (randWorm!=2)
+  //  {
+  //    wormSpawn2=false;
+  //  }
+  //
+  //  if (wormSpawn2==true)
+  //  {
+  //    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, 5, height*13/20+yAxis/30, height*13/20-yAxis/30 );
+  //    wormMans.add(wormMan);
+  //  }
 
   //------------------------------------------------Skull Generating-------------------------------------------------------
   randSkull=round(random(1, 1000 )); // RANDOM SKULL
@@ -180,7 +186,7 @@ void draw()
 
   //------------------------------------------------Skull Icon Loader------------------------------------------------------- 
 
-  Skull_bar skull_bar = new Skull_bar(-100,height*2/3);
+  Skull_bar skull_bar = new Skull_bar(-100, height*2/3);
   skull_bars.add(skull_bar);
 
 
@@ -203,34 +209,6 @@ void draw()
     }
   }
 
-  //  if(headPos==BadheadPosy)
-  //  {
-  //    which=1;
-  //  }
-
-
-  //  if (which==0)
-  //  {
-  //    int logofade;
-  //    background(0);
-  //    int i;
-  //
-  //      logofade=i;
-  //      if(i==0)
-  //
-  //        which=1;
-  //
-  //     
-  //    }
-  //      ellipseMode(CENTER);
-  //      fill(255);
-  //      ellipse(width/2, height/2, 200, 200);
-  //    
-  //    PImage logo;
-  //    imageMode(CENTER);
-  //    logo=loadImage("logo.png");
-  //    image(logo, width/2, height/2, 200, 200);
-  //  }
   if (which==1)
   {
     PFont font;
@@ -338,7 +316,7 @@ void draw()
     {
       headPos-=10;
     }
-    if (jump==true&&headPos<height*16/20)
+    if (jump==true&&headPos<height*17/20)
     {
       headPos+=10;
     }
@@ -352,12 +330,14 @@ void draw()
         go.render();
       }
 
-
-      for (int i = skulls.size () - 1; i >= 0; i --)
+      if (skullActivated==false)
       {
-        Skull go =skulls.get(i);
-        go.update();
-        go.render();
+        for (int i = skulls.size () - 1; i >= 0; i --)
+        {
+          Skull go =skulls.get(i);
+          go.update();
+          go.render();
+        }
       }
 
       for (int i = times.size () - 1; i >= 0; i --)
@@ -367,11 +347,11 @@ void draw()
         go.render();
       }
     }
-    
-    if(pause==true)
+
+    if (pause==true)
     {
-      
-            for (int i = skull_bars.size () - 1; i >= 0; i --)
+
+      for (int i = skull_bars.size () - 1; i >= 0; i --)
       {
         Skull_bar go =skull_bars.get(i);
         go.update();
@@ -396,22 +376,69 @@ void draw()
   //    }
   //  }
 
+  checkDetect();
+  if (which==2)
+  {
+    checkLife();
+    if (skullActivated==true)
+    {
+      checkActivateSkull();
+    }
+    if (dead==true)
+    {
+      which=1;
+    }
+  }
 
-  if (dead==true)
+  void keyPressed()
   {
-    which=1;
+    if (key==' ')
+    {
+      jump=!jump;
+    }
+    if (key=='p')
+    {
+      pause=!pause;
+    }
   }
-}
+  void checkDetect()
+  {
+    for (int i = wormMans.size () - 1; i >= 0; i --)
+    {
+      WormMan go =wormMans.get(i);
+      if (headPos>height*16/20-1&&go.BadheadPosx==width/2)
+      {
+        println("WORKING BOTTOM");
+        life-=20;
+        if (life==0)
+        {
+          dead=true;
+        }
+      }
+    }
 
-void keyPressed()
-{
-  if (key==' ')
-  {
-    jump=!jump;
+    for (int i = skulls.size () - 1; i >= 0; i --)
+    {
+      Skull go =skulls.get(i);
+      if (headPos<height/2+20&&headPos>height/2-20&&go.skullMove<width/2+20&&go.skullMove>width/2-20)
+      {
+        println("SKULL ACTIVATED!!");
+        skullActivated=true;
+      }
+    }
   }
-  if (key=='p')
+  void checkLife()
   {
-    pause=!pause;
+    noStroke();
+    fill(85, 255, 0);
+    rectMode(CENTER);
+    rect(width/2, height*19/20, life, 10);
   }
-}
+int skullDelay=0;
+  void checkActivateSkull();
+  {
+    if(skullDelay==1000)
+    {
+      
+  }
 
