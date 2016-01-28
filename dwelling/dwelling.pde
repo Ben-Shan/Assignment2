@@ -137,7 +137,7 @@ void draw()
 
   if (wormSpawn==true)
   {
-    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, Wormspeed, height*17/20+yAxis/30, height*17/20-yAxis/30);
+    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, Wormspeed);
     wormMans.add(wormMan);
   }
 
@@ -476,12 +476,13 @@ void checkActivateSkull()
   }
 
 
-  if (skullDelay==250)
+  if (skullDelay==500)
   {
     skullActivated=false;
     skullDelay=0;
     println("Skulls have returned");
     skullTextFade=250;
+    
     Wormspeed=5;
   }
   skullDelay++;
@@ -500,20 +501,21 @@ void skullText()
 int skullType;
 void skullEffect()
 {
+  skullTextFade1=250;
   //skullType=round(random(1, 4));
   skullType=1;
   if (skullType==1)
   {
     println("Overwhelmed!");
-    skullTextFade1=250;
+
     
-    if (skullTextFade1!=0)
+    if (skullActivated==true)
     {
       textAlign(CENTER);
       fill(255);
       textSize(45);
-      text("OVERWHELMED!", width/2, height*2/20);
-      //skullTextFade1--;
+      text("OVERWHELMED!", width/2, height*4/20);
+      skullTextFade1--;
     }
     
     Wormspeed=10;

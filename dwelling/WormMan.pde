@@ -7,33 +7,36 @@ class WormMan
   int BadheadPosy;
   int BadheadPosx;
 
-  int headTop;
-  int headBottom;
+  int headTop= height*17/20+yAxis/30;
+  int headBottom= height*17/20-yAxis/30;
 
-  int BadbodySize=BadheadSize*2/3;
-  int BadbodyPosx=BadheadPosx+(xAxis/25);
-  int BadbodyPosy=BadheadPosy;
-
-  int BadtailSize=BadheadSize*1/3;
-  int BadtailPosx=BadtailPosx=BadheadPosx+(xAxis/15);
-  int BadtailPosy=BadheadPosy;
 
   int Wormspeed;
 
-  WormMan(int BadheadSize, int BadheadPosy, int BadheadPosx, int Wormspeed, int headTop, int headBottom)
+  WormMan(int BadheadSize, int BadheadPosy, int BadheadPosx, int Wormspeed)
   {
 
     this.BadheadSize = BadheadSize;
     this.BadheadPosy = BadheadPosy;
     this.BadheadPosx = BadheadPosx;
     this.Wormspeed = Wormspeed;
-    this.headTop = headTop;
-    this.headBottom = headBottom;
-//    this.BadbodySize=BadbodySize;
-//    this.BadbodyPosx=BadbodyPosx;
-//    this.BadbodyPosy=BadbodyPosy;
+    //this.headTop = headTop;
+    //this.headBottom = headBottom;
+    //    this.BadbodySize=BadbodySize;
+    //    this.BadbodyPosx=BadbodyPosx;
+    //    this.BadbodyPosy=BadbodyPosy;
   }
 
+
+  int BadbodySize=BadheadSize*2/3;
+  //int BadbodyPosx=BadheadPosx+(width/25);
+  int BadbodyPosx;
+  int BadbodyPosy=BadheadPosy;
+
+  int BadtailSize=BadheadSize*1/3;
+  //int BadtailPosx=BadheadPosx+(width/15);
+  int BadtailPosx;
+  int BadtailPosy=BadheadPosy;
 
 
   void update()
@@ -47,9 +50,9 @@ class WormMan
     //      BadheadPosx=width;
     //    }
 
-    BadbodyPosx=BadheadPosx+(xAxis/25);
+    BadbodyPosx=BadheadPosx+(width/25);
 
-    BadtailPosx=BadheadPosx+(xAxis/15);
+    BadtailPosx=BadheadPosx+(width/15);
   }
 
   void render()
@@ -61,7 +64,7 @@ class WormMan
     rectMode(CORNER);
     rect(BadtailPosx, BadtailPosy, BadtailSize, BadtailSize);
     rect(BadbodyPosx, BadbodyPosy, BadbodySize, BadbodySize);
-    stroke(255);
+    //stroke(255);
 
 
     if (BadbodyPosy==headTop)
