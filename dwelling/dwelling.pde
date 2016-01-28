@@ -141,20 +141,20 @@ void draw()
     wormMans.add(wormMan);
   }
 
-  //  if (randWorm==2)
-  //  {
-  //    wormSpawn2=true;
-  //  }
-  //  if (randWorm!=2)
-  //  {
-  //    wormSpawn2=false;
-  //  }
-  //
-  //  if (wormSpawn2==true)
-  //  {
-  //    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, 5, height*13/20+yAxis/30, height*13/20-yAxis/30 );
-  //    wormMans.add(wormMan);
-  //  }
+  if (randWorm==2)
+  {
+    wormSpawn2=true;
+  }
+  if (randWorm!=2)
+  {
+    wormSpawn2=false;
+  }
+
+  if (wormSpawn2==true)
+  {
+    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, Wormspeed );
+    wormMans.add(wormMan);
+  }
 
   //------------------------------------------------Skull Generating-------------------------------------------------------
   randSkull=round(random(1, 2000 )); // RANDOM SKULL
@@ -175,7 +175,7 @@ void draw()
   }
 
   //------------------------------------------------Add Time Generating-------------------------------------------------------  
-  randTime=round(random(1, 500 )); // RANDOM TimeBall
+  randTime=round(random(1, 600 )); // RANDOM TimeBall
   if (randTime==99)
   {
     timeSpawn=true;
@@ -320,13 +320,13 @@ void draw()
     //drawText(); //Messes with the jumping :(
 
 
-    if (jump==false&&headPos>height*2/20)
+    if (jump==false&&headPos>height*3/20)
     {
-      headPos-=10;
+      headPos-=15;
     }
     if (jump==true&&headPos<height*17/20)
     {
-      headPos+=10;
+      headPos+=15;
     }
 
     if (pause==false)
@@ -417,9 +417,20 @@ void checkDetect()
   for (int i = wormMans.size () - 1; i >= 0; i --)
   {
     WormMan go =wormMans.get(i);
-    if (headPos>height*16/20-1&&go.BadheadPosx==width/2)
+    if (headPos>height*16/20-1&&go.BadheadPosx==width/2&&go.BadheadPosy>height/2)
     {
+      //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
+      //    {
       println("WORKING BOTTOM");
+      life-=20;
+      if (life==0||life<0)
+      {
+        dead=true;
+      }
+    }
+    if (headPos<height*3/20+1&&go.BadheadPosx==width/2&&go.BadheadPosy<height/2)
+    {
+      println("WORKING TOP");
       life-=20;
       if (life==0||life<0)
       {
@@ -449,7 +460,10 @@ void checkDetect()
       //println("time collected");
       println("health collected");
       times.remove(i);
-      life+=10;
+      if (life<200)
+      {
+        life+=10;
+      }
     }
   }
   fill(255);
@@ -482,8 +496,9 @@ void checkActivateSkull()
     skullDelay=0;
     println("Skulls have returned");
     skullTextFade=250;
-    
+
     Wormspeed=5;
+    headSize=yAxis/12;
   }
   skullDelay++;
 }
@@ -502,13 +517,13 @@ int skullType;
 void skullEffect()
 {
   skullTextFade1=250;
-  skullType=round(random(1, 2));
+  skullType=round(random(1, 3));
 
   if (skullType==1)
   {
     println("Overwhelmed!");
 
-    
+
     if (skullActivated==true)
     {
       textAlign(CENTER);
@@ -517,7 +532,7 @@ void skullEffect()
       text("OVERWHELMED!", width/2, height*4/20);
       skullTextFade1--;
     }
-    
+
     Wormspeed=10;
     if (skullActivated==false)
     {
@@ -537,8 +552,9 @@ void skullEffect()
 
   if (skullType==3)
   {
-    println("Overwhelmed!"); 
-    Wormspeed=10;
+    println("ANGER!"); 
+    headSize=yAxis/12*2;
+
     if (skullActivated==false)
     {
       skullType=0;
