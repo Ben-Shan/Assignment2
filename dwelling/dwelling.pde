@@ -421,7 +421,7 @@ void checkDetect()
     {
       println("WORKING BOTTOM");
       life-=20;
-      if (life==0)
+      if (life==0||life<0)
       {
         dead=true;
       }
@@ -502,8 +502,8 @@ int skullType;
 void skullEffect()
 {
   skullTextFade1=250;
-  //skullType=round(random(1, 4));
-  skullType=1;
+  skullType=round(random(1, 2));
+
   if (skullType==1)
   {
     println("Overwhelmed!");
@@ -527,8 +527,8 @@ void skullEffect()
 
   if (skullType==2)
   {
-    println("Overwhelmed!"); 
-    Wormspeed=10;
+    println("SELF CONTAINED"); 
+    Wormspeed=2;
     if (skullActivated==false)
     {
       skullType=0;
