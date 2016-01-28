@@ -33,6 +33,8 @@ int minBlock = 1;
 int maxBlock = 5;
 //--------------------galaxy-----------------------------
 
+
+int Wormspeed=5;
 int randWorm;
 boolean wormSpawn=false;
 boolean wormSpawn2=false;
@@ -51,9 +53,9 @@ void setup()
 
   size(xAxis, yAxis);
 
-
   minim = new Minim(this);
   player = minim.loadFile("Gamemusic.mp3", 1048);
+
 
   minim = new Minim(this);
   player1 = minim.loadFile("skullSound.wav", 4096);
@@ -118,6 +120,7 @@ boolean fade;
 int textOp=200;
 int CMOp=0;
 int MOp=0;
+
 void draw()
 {
 
@@ -134,7 +137,7 @@ void draw()
 
   if (wormSpawn==true)
   {
-    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, 5, height*17/20+yAxis/30, height*17/20-yAxis/30);
+    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, Wormspeed, height*17/20+yAxis/30, height*17/20-yAxis/30);
     wormMans.add(wormMan);
   }
 
@@ -433,6 +436,7 @@ void checkDetect()
       println("SKULL ACTIVATED!!");
       skullActivated=true;
       skulls.remove(i);
+      skullEffect();
     }
   }
 
@@ -442,10 +446,16 @@ void checkDetect()
     Time go =times.get(i);
     if (go.timeMove<width/2+20&&go.timeMove>width/2-20&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
     {
-      println("time collected");
+      //println("time collected");
+      println("health collected");
       times.remove(i);
+      life+=10;
     }
   }
+  fill(255);
+  textSize(24);
+  text(life, width*19/20, height*39/40);
+  text(Wormspeed, width*1/20, height*39/40);
 }
 void checkLife()
 {
@@ -456,6 +466,7 @@ void checkLife()
 }
 int skullDelay=0;
 int skullTextFade=0;
+int skullTextFade1=0;
 void checkActivateSkull()
 {
   if (player1.isPlaying()==false)
@@ -471,6 +482,7 @@ void checkActivateSkull()
     skullDelay=0;
     println("Skulls have returned");
     skullTextFade=250;
+    Wormspeed=5;
   }
   skullDelay++;
 }
@@ -483,6 +495,62 @@ void skullText()
     textSize(32);
     text("The Skulls have returned", width/2, height/2);
     skullTextFade--;
+  }
+}
+int skullType;
+void skullEffect()
+{
+  //skullType=round(random(1, 4));
+  skullType=1;
+  if (skullType==1)
+  {
+    println("Overwhelmed!");
+    skullTextFade1=250;
+    
+    if (skullTextFade1!=0)
+    {
+      textAlign(CENTER);
+      fill(255);
+      textSize(45);
+      text("OVERWHELMED!", width/2, height*2/20);
+      //skullTextFade1--;
+    }
+    
+    Wormspeed=10;
+    if (skullActivated==false)
+    {
+      skullType=0;
+    }
+  }
+
+  if (skullType==2)
+  {
+    println("Overwhelmed!"); 
+    Wormspeed=10;
+    if (skullActivated==false)
+    {
+      skullType=0;
+    }
+  }
+
+  if (skullType==3)
+  {
+    println("Overwhelmed!"); 
+    Wormspeed=10;
+    if (skullActivated==false)
+    {
+      skullType=0;
+    }
+  }
+
+  if (skullType==4)
+  {
+    println("Overwhelmed!"); 
+    Wormspeed=10;
+    if (skullActivated==false)
+    {
+      skullType=0;
+    }
   }
 }
 
