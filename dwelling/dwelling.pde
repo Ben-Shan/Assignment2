@@ -442,7 +442,7 @@ void checkDetect()
   for (int i = skulls.size () - 1; i >= 0; i --)
   {
     Skull go =skulls.get(i);
-    if (headPos<height/2+20&&headPos>height/2-20&&go.skullMove<width/2+20&&go.skullMove>width/2-20)
+    if (headPos<height/2+30&&headPos>height/2-30&&go.skullMove<width/2+30&&go.skullMove>width/2-30)
     {
       println("SKULL ACTIVATED!!");
       skullActivated=true;
@@ -469,7 +469,7 @@ void checkDetect()
   fill(255);
   textSize(24);
   text(life, width*19/20, height*39/40);
-  text(Wormspeed, width*1/20, height*39/40);
+  text(frameCount, width*1/20, height*39/40);
 }
 void checkLife()
 {
