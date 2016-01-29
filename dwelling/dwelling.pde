@@ -89,8 +89,7 @@ int headSize=yAxis/12;
 int headPos=height*16/20;
 
 int wormColour=255;
-int wormColour2=255;
-int wormColour3=255;
+boolean wormRage=false;
 
 //int headCentrex=width/2;
 //int headCentrey=headPos
@@ -99,8 +98,18 @@ void drawWorm()
 {
 
 
-  fill(wormColour,wormColour2,wormColour3);
-  noStroke();
+  
+  if (wormRage==false)
+  {
+    noStroke();
+  }
+  if(wormRage==true)
+  {
+    stroke(round(random(0,255)),0,0);
+    
+    strokeWeight(4);
+  }
+  fill(wormColour);
   rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
 }
@@ -161,7 +170,7 @@ void draw()
   }
 
   //------------------------------------------------Skull Generating-------------------------------------------------------
-  randSkull=round(random(1, 2000 )); // RANDOM SKULL
+  randSkull=round(random(1, 1000 )); // RANDOM SKULL
   if (randSkull==999)
   {
     skullSpawn=true;
@@ -360,7 +369,7 @@ void draw()
       }
     }
 
-    
+
     //    if(headPos==BadheadPosx)
     //    {
     //      dead=true;
@@ -391,6 +400,7 @@ void draw()
     skullText();
     if (dead==true)
     {
+
       which=1;
     }
   }
@@ -498,8 +508,8 @@ void checkActivateSkull()
     Wormspeed=5;
     headSize=yAxis/12;
     WormHitbox=30;
-    wormColour2=250;
-    wormColour3=250;
+    wormRage=false;
+    skullType=0;
   }
   skullDelay++;
 }
@@ -518,61 +528,71 @@ int skullType;
 void skullEffect()
 {
   skullTextFade1=250;
-  skullType=round(random(1, 3));
+  skullType=round(random(1, 4));
 
   if (skullType==1)
   {
     println("Overwhelmed!");
 
 
-    if (skullActivated==true)
-    {
-      textAlign(CENTER);
-      fill(255);
-      textSize(45);
-      text("OVERWHELMED!", width/2, height*4/20);
-      skullTextFade1--;
-    }
+
+    textAlign(CENTER);
+    fill(255);
+    textSize(45);
+    text("OVERWHELMED!", width/2, height*2/40);
+    skullTextFade1--;
+
 
     Wormspeed=10;
-    if (skullActivated==false)
-    {
-      skullType=0;
-    }
+    //    if (skullActivated==false)
+    //    {
+    //      skullType=0;
+    //    }
   }
 
   if (skullType==2)
   {
     println("SELF CONTAINED"); 
+
+    textAlign(CENTER);
+    fill(255);
+    textSize(45);
+    text("SELF CONTAINED!", width/2, height*2/40);
+
     Wormspeed=2;
-    if (skullActivated==false)
-    {
-      skullType=0;
-    }
+    //    if (skullActivated==false)
+    //    {
+    //      skullType=0;
+    //    }
   }
 
   if (skullType==3)
   {
     println("ANGER!"); 
+
+    textAlign(CENTER);
+    fill(255);
+    textSize(45);
+    text("ANGER!", width/2, height*2/40);
+
     headSize=yAxis/12*2;
     WormHitbox=55;
-    wormColour2=128;
-    wormColour3=114;
+    wormRage=true;
 
-    if (skullActivated==false)
-    {
-      skullType=0;
-    }
+    //    if (skullActivated==false)
+    //    {
+    //      skullType=0;
+    //    }
   }
 
   if (skullType==4)
   {
-    println("Overwhelmed!"); 
-    Wormspeed=10;
-    if (skullActivated==false)
-    {
-      skullType=0;
-    }
+    println("FEAR!"); 
+    //noFill();
+    //stroke(0);
+    //strokeWeight(100);
+    ellipse(width/2,headPos,headSize*2,headSize*2);
   }
 }
+
 
