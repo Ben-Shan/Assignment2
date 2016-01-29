@@ -7,8 +7,8 @@ class WormMan
   int BadheadPosy;
   int BadheadPosx;
 
-  int headTop= height*17/20+yAxis/30;
-  int headBottom= height*17/20-yAxis/30;
+  int headTop= height*17/20+height/30;
+  int headBottom= height*17/20-height/30;
 
 
   int Wormspeed;

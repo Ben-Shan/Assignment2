@@ -88,6 +88,10 @@ int life=200;
 int headSize=yAxis/12;
 int headPos=height*16/20;
 
+int wormColour=255;
+int wormColour2=255;
+int wormColour3=255;
+
 //int headCentrex=width/2;
 //int headCentrey=headPos
 
@@ -95,7 +99,7 @@ void drawWorm()
 {
 
 
-  fill(255);
+  fill(wormColour,wormColour2,wormColour3);
   noStroke();
   rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
@@ -356,16 +360,7 @@ void draw()
       }
     }
 
-    if (pause==true)
-    {
-
-      for (int i = skull_bars.size () - 1; i >= 0; i --)
-      {
-        Skull_bar go =skull_bars.get(i);
-        go.update();
-        go.render();
-      }
-    }
+    
     //    if(headPos==BadheadPosx)
     //    {
     //      dead=true;
@@ -412,25 +407,28 @@ void keyPressed()
   }
 }
 
+int WormHitbox=30;
 void checkDetect()
 {
   for (int i = wormMans.size () - 1; i >= 0; i --)
   {
     WormMan go =wormMans.get(i);
-    if (headPos>height*16/20-1&&go.BadheadPosx==width/2&&go.BadheadPosy>height/2)
+    if (headPos>height*16/20-1&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
     {
       //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
       //    {
       println("WORKING BOTTOM");
+      wormMans.remove(i);
       life-=20;
       if (life==0||life<0)
       {
         dead=true;
       }
     }
-    if (headPos<height*3/20+1&&go.BadheadPosx==width/2&&go.BadheadPosy<height/2)
+    if (headPos<height*3/20+1&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy<height/2)
     {
       println("WORKING TOP");
+      wormMans.remove(i);
       life-=20;
       if (life==0||life<0)
       {
@@ -499,6 +497,9 @@ void checkActivateSkull()
 
     Wormspeed=5;
     headSize=yAxis/12;
+    WormHitbox=30;
+    wormColour2=250;
+    wormColour3=250;
   }
   skullDelay++;
 }
@@ -554,6 +555,9 @@ void skullEffect()
   {
     println("ANGER!"); 
     headSize=yAxis/12*2;
+    WormHitbox=55;
+    wormColour2=128;
+    wormColour3=114;
 
     if (skullActivated==false)
     {
