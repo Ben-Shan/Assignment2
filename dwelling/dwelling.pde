@@ -82,6 +82,7 @@ int yAxis=xAxis/2;
 boolean up=true;
 boolean jump=true;
 boolean dead=false;
+boolean FEAR=false;
 
 int life=200;
 
@@ -98,17 +99,18 @@ void drawWorm()
 {
 
 
-  
+
   if (wormRage==false)
   {
     noStroke();
   }
-  if(wormRage==true)
+  if (wormRage==true)
   {
-    stroke(round(random(0,255)),0,0);
-    
+    stroke(round(random(0, 255)), 0, 0);
+
     strokeWeight(4);
   }
+
   fill(wormColour);
   rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
@@ -404,7 +406,15 @@ void draw()
       which=1;
     }
   }
-}
+
+
+  if (FEAR==true)
+  {
+    fill(0, 180);
+    noStroke();
+    rect(width/2, height/2, width, height);
+  }
+}//------END OF DRAW
 void keyPressed()
 {
   if (key==' ')
@@ -509,6 +519,7 @@ void checkActivateSkull()
     headSize=yAxis/12;
     WormHitbox=30;
     wormRage=false;
+    FEAR=false;
     skullType=0;
   }
   skullDelay++;
@@ -528,7 +539,7 @@ int skullType;
 void skullEffect()
 {
   skullTextFade1=250;
-  skullType=round(random(1, 4));
+  skullType=round(random(1,4));
 
   if (skullType==1)
   {
@@ -588,11 +599,7 @@ void skullEffect()
   if (skullType==4)
   {
     println("FEAR!"); 
-    //noFill();
-    //stroke(0);
-    //strokeWeight(100);
-    ellipse(width/2,headPos,headSize*2,headSize*2);
+    FEAR=true;
   }
 }
-
 
