@@ -433,7 +433,7 @@ void checkDetect()
   for (int i = wormMans.size () - 1; i >= 0; i --)
   {
     WormMan go =wormMans.get(i);
-    if (headPos>height*16/20-1&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
+    if (headPos>height*16/20-WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
     {
       //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
       //    {
@@ -445,7 +445,7 @@ void checkDetect()
         dead=true;
       }
     }
-    if (headPos<height*3/20+1&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy<height/2)
+    if (headPos<height*3/20+WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy<height/2)
     {
       println("WORKING TOP");
       wormMans.remove(i);
@@ -539,7 +539,7 @@ int skullType;
 void skullEffect()
 {
   skullTextFade1=250;
-  skullType=round(random(1,4));
+  skullType=round(random(1,5));
 
   if (skullType==1)
   {

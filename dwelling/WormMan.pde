@@ -13,6 +13,7 @@ class WormMan
 
   int Wormspeed;
 
+
   WormMan(int BadheadSize, int BadheadPosy, int BadheadPosx, int Wormspeed)
   {
 
