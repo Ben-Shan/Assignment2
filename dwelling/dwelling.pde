@@ -376,7 +376,7 @@ void draw()
 
     if (FEAR==true)
     {
-      fill(0, 180);
+      fill(0, 160);
       noStroke();
       rect(0,0, width, height);
     }
