@@ -138,7 +138,7 @@ boolean fade;
 int textOp=200;
 int CMOp=0;
 int MOp=0;
-
+int timePos=round(random(20,height-20));
 void draw()
 {
 
@@ -206,7 +206,7 @@ void draw()
 
   if (timeSpawn==true)
   {
-    Time time = new Time(width, height/2, 2);
+    Time time = new Time(width, timePos, 2);
     times.add(time);
   }
 
@@ -378,7 +378,7 @@ void draw()
     {
       fill(0, 160);
       noStroke();
-      rect(0,0, width, height);
+      rect(0, 0, width, height);
     }
 
 
@@ -412,7 +412,7 @@ void draw()
     skullText();
     if (dead==true)
     {
-
+      setup();
       which=1;
     }
   }
@@ -475,7 +475,7 @@ void checkDetect()
   for (int i = times.size () - 1; i >= 0; i --)
   {
     Time go =times.get(i);
-    if (go.timeMove<width/2+20&&go.timeMove>width/2-20&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
+    if (go.timeMove<width/2+WormHitbox&&go.timeMove>width/2-WormHitbox&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
     {
       //println("time collected");
       println("health collected");
@@ -488,8 +488,16 @@ void checkDetect()
   }
   fill(255);
   textSize(24);
-  text(life, width*19/20, height*39/40);
-  text(frameCount, width*1/20, height*39/40);
+  text("life:"+life, width*19/20, height*39/40);
+
+  int m=0;
+  m=millis();
+  int mD=m/1000;
+  if (which==2)
+  {
+
+    text("Time Survived: "+mD, width*2/20, height*39/40);
+  }
 }
 void checkLife()
 {
