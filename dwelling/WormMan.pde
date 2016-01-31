@@ -42,18 +42,13 @@ class WormMan
 
   void update()
   {
-    //if (BadheadPosx>-55)
-    //{
+
     BadheadPosx-=Wormspeed;
-    //}
-    //    if(BadheadPosx<-55)
-    //    {
-    //      BadheadPosx=width;
-    //    }
 
-    BadbodyPosx=BadheadPosx+(width/25);
 
-    BadtailPosx=BadheadPosx+(width/15);
+    //BadbodyPosx=BadheadPosx+(width/25);
+
+    //BadtailPosx=BadheadPosx+(width/15);
   }
 
   void render()

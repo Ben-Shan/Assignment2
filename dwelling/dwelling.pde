@@ -83,6 +83,9 @@ boolean up=true;
 boolean jump=true;
 boolean dead=false;
 boolean FEAR=false;
+boolean OW=false;
+boolean ANGER=false;
+boolean FATIGUE=false;
 
 int life=200;
 
@@ -371,6 +374,13 @@ void draw()
       }
     }
 
+    if (FEAR==true)
+    {
+      fill(0, 180);
+      noStroke();
+      rect(0,0, width, height);
+    }
+
 
     //    if(headPos==BadheadPosx)
     //    {
@@ -405,14 +415,6 @@ void draw()
 
       which=1;
     }
-  }
-
-
-  if (FEAR==true)
-  {
-    fill(0, 180);
-    noStroke();
-    rect(width/2, height/2, width, height);
   }
 }//------END OF DRAW
 void keyPressed()
@@ -498,7 +500,7 @@ void checkLife()
 }
 int skullDelay=0;
 int skullTextFade=0;
-int skullTextFade1=0;
+int skullTextFade1=250;
 void checkActivateSkull()
 {
   if (player1.isPlaying()==false)
@@ -514,12 +516,16 @@ void checkActivateSkull()
     skullDelay=0;
     println("Skulls have returned");
     skullTextFade=250;
+    skullTextFade1=250;
 
     Wormspeed=5;
     headSize=yAxis/12;
     WormHitbox=30;
     wormRage=false;
     FEAR=false;
+    OW=false;
+    FATIGUE=false;
+    ANGER=false;
     skullType=0;
   }
   skullDelay++;
@@ -534,66 +540,67 @@ void skullText()
     text("The Skulls have returned", width/2, height/2);
     skullTextFade--;
   }
+
+  if (OW==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("OVERWHELMED!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (FEAR==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("FEAR!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (FATIGUE==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("FATIGUE!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (ANGER==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("ANGER!", width/2, height/2);
+    skullTextFade1--;
+  }
 }
 int skullType;
 void skullEffect()
 {
-  skullTextFade1=250;
-  skullType=round(random(1,5));
 
-  if (skullType==1)
-  {
-    println("Overwhelmed!");
-
-
-
-    textAlign(CENTER);
-    fill(255);
-    textSize(45);
-    text("OVERWHELMED!", width/2, height*2/40);
-    skullTextFade1--;
-
-
-    Wormspeed=10;
-    //    if (skullActivated==false)
-    //    {
-    //      skullType=0;
-    //    }
-  }
+  skullType=round(random(1, 4));
 
   if (skullType==2)
   {
-    println("SELF CONTAINED"); 
+    println("Overwhelmed!");
+    OW=true;
+    Wormspeed=10;
+  }
 
-    textAlign(CENTER);
-    fill(255);
-    textSize(45);
-    text("SELF CONTAINED!", width/2, height*2/40);
-
+  if (skullType==1)
+  {
+    println("FATIGUE!!"); 
+    FATIGUE=true;
     Wormspeed=2;
-    //    if (skullActivated==false)
-    //    {
-    //      skullType=0;
-    //    }
   }
 
   if (skullType==3)
   {
     println("ANGER!"); 
-
-    textAlign(CENTER);
-    fill(255);
-    textSize(45);
-    text("ANGER!", width/2, height*2/40);
-
+    ANGER=true;
     headSize=yAxis/12*2;
     WormHitbox=55;
     wormRage=true;
-
-    //    if (skullActivated==false)
-    //    {
-    //      skullType=0;
-    //    }
   }
 
   if (skullType==4)
