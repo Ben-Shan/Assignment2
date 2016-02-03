@@ -141,7 +141,7 @@ boolean fade;
 int textOp=200;
 int CMOp=0;
 int MOp=0;
-int timePos=round(random(20,height-20));
+int timePos=round(random(20, height-20));
 void draw()
 {
 
@@ -340,12 +340,26 @@ void draw()
     drawWorm();
     //drawText(); //Messes with the jumping :(
 
+    int ground=height*17/20;
+    int roof=height*3/20;
+    if (ANGER==true)
+    {
+      ground=height*16/20;
+      roof=height*4/20;
+    }
+    if (ANGER==false)
+    {
 
-    if (jump==false&&headPos>height*3/20)
+      ground=height*17/20;
+      roof=height*3/20;
+    }
+
+
+    if (jump==false&&headPos>roof)
     {
       headPos-=15;
     }
-    if (jump==true&&headPos<height*17/20)
+    if (jump==true&&headPos<ground)
     {
       headPos+=15;
     }
@@ -415,7 +429,7 @@ void draw()
     skullText();
     if (dead==true)
     {
-      
+
       which=3;
     }
   }
@@ -492,23 +506,23 @@ void checkDetect()
   }
   fill(255);
   textSize(24);
-  
+
 
   int m=0;
   m=millis();
   int mD=m/1000;
-  if(dead==false)
+  if (dead==false)
   {
-  score=mD*skullCounter;
+    score=mD*skullCounter;
   }
   if (which==2)
   {
     text("life:"+life, width*19/20, height*39/40);
     text("Time Survived: "+mD, width*2/20, height*39/40);
-    text("Skulls Collected: "+skullCounter, width*2/20,height*2/40);
-    text("Score: "+score,width*19/20,height*2/40);
+    text("Skulls Collected: "+skullCounter, width*2/20, height*2/40);
+    text("Score: "+score, width*19/20, height*2/40);
   }
-  if(which==3)
+  if (which==3)
   {
     EndScreen();
   }
@@ -634,34 +648,34 @@ void skullEffect()
 
 void EndScreen()
 {
-      PImage bgE;
+  PImage bgE;
 
-      bgE = loadImage("GameDeadMenu.png");
-      background(bgE);
-      
-          if (CMOp==0)
+  bgE = loadImage("GameDeadMenu.png");
+  background(bgE);
+
+  if (CMOp==0)
+  {
+    MOp+=2;
+    if (MOp==250)
     {
-      MOp+=2;
-      if (MOp==250)
-      {
-        CMOp=1;
-      }
-    } else if (CMOp==1)
-    {
-      MOp-=2;
-      if (MOp==0)
-      {
-        CMOp=0;
-      }
+      CMOp=1;
     }
+  } else if (CMOp==1)
+  {
+    MOp-=2;
+    if (MOp==0)
+    {
+      CMOp=0;
+    }
+  }
 
-    fill(0, MOp);
-    rect(width/2, height/2, width, height);
+  fill(0, MOp);
+  rect(width/2, height/2, width, height);
 
   fill(MOp);
   textAlign(CENTER);
   textSize(50);
-  text("Your final score:\t"+score,width/2,height*1/3);
-  
+  text("Your survival score:", width/2, height*1/3);
+  text(score, width/2, height*4/9);
 }
 
