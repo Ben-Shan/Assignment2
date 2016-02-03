@@ -42,12 +42,15 @@ boolean wormSpawn2=false;
 int randSkull;
 boolean skullSpawn=false;
 boolean skullActivated=false;
+int skullCounter=0;
 
 
 int randTime;
 boolean timeSpawn=false;
 
 boolean pause=false;
+
+int score=0;
 void setup()
 {
 
@@ -412,8 +415,8 @@ void draw()
     skullText();
     if (dead==true)
     {
-      setup();
-      which=1;
+      
+      which=3;
     }
   }
 }//------END OF DRAW
@@ -466,6 +469,7 @@ void checkDetect()
     {
       println("SKULL ACTIVATED!!");
       skullActivated=true;
+      skullCounter++;
       skulls.remove(i);
       skullEffect();
     }
@@ -488,15 +492,25 @@ void checkDetect()
   }
   fill(255);
   textSize(24);
-  text("life:"+life, width*19/20, height*39/40);
+  
 
   int m=0;
   m=millis();
   int mD=m/1000;
+  if(dead==false)
+  {
+  score=mD*skullCounter;
+  }
   if (which==2)
   {
-
+    text("life:"+life, width*19/20, height*39/40);
     text("Time Survived: "+mD, width*2/20, height*39/40);
+    text("Skulls Collected: "+skullCounter, width*2/20,height*2/40);
+    text("Score: "+score,width*19/20,height*2/40);
+  }
+  if(which==3)
+  {
+    EndScreen();
   }
 }
 void checkLife()
@@ -616,5 +630,38 @@ void skullEffect()
     println("FEAR!"); 
     FEAR=true;
   }
+}
+
+void EndScreen()
+{
+      PImage bgE;
+
+      bgE = loadImage("GameDeadMenu.png");
+      background(bgE);
+      
+          if (CMOp==0)
+    {
+      MOp+=2;
+      if (MOp==250)
+      {
+        CMOp=1;
+      }
+    } else if (CMOp==1)
+    {
+      MOp-=2;
+      if (MOp==0)
+      {
+        CMOp=0;
+      }
+    }
+
+    fill(0, MOp);
+    rect(width/2, height/2, width, height);
+
+  fill(MOp);
+  textAlign(CENTER);
+  textSize(50);
+  text("Your final score:\t"+score,width/2,height*1/3);
+  
 }
 
