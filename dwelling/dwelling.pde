@@ -88,6 +88,7 @@ boolean dead=false;
 boolean FEAR=false;
 boolean OW=false;
 boolean ANGER=false;
+boolean SAD=false;
 boolean FATIGUE=false;
 
 int life=200;
@@ -97,6 +98,7 @@ int headPos=height*16/20;
 
 int wormColour=255;
 boolean wormRage=false;
+int wormOp=255;
 
 //int headCentrex=width/2;
 //int headCentrey=headPos
@@ -110,6 +112,7 @@ void drawWorm()
   {
     noStroke();
   }
+
   if (wormRage==true)
   {
     stroke(round(random(0, 255)), 0, 0);
@@ -117,7 +120,7 @@ void drawWorm()
     strokeWeight(4);
   }
 
-  fill(wormColour);
+  fill(wormColour,wormOp);
   rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
 }
@@ -354,6 +357,18 @@ void draw()
       roof=height*3/20;
     }
 
+    if (SAD==true)
+    {
+      ground=height*18/20;
+      roof=height*5/40;
+    }
+    if (SAD==false)
+    {
+
+      ground=height*17/20;
+      roof=height*3/20;
+    }
+
 
     if (jump==false&&headPos>roof)
     {
@@ -505,7 +520,7 @@ void checkDetect()
     }
   }
   fill(255);
-  textSize(24);
+
 
 
   int m=0;
@@ -517,10 +532,12 @@ void checkDetect()
   }
   if (which==2)
   {
+    textSize(24);
     text("life:"+life, width*19/20, height*39/40);
     text("Time Survived: "+mD, width*2/20, height*39/40);
     text("Skulls Collected: "+skullCounter, width*2/20, height*2/40);
-    text("Score: "+score, width*19/20, height*2/40);
+
+    text("Score: "+score, width*18/20, height*2/40);
   }
   if (which==3)
   {
@@ -558,10 +575,12 @@ void checkActivateSkull()
     headSize=yAxis/12;
     WormHitbox=30;
     wormRage=false;
+    wormOp=255;
     FEAR=false;
     OW=false;
     FATIGUE=false;
     ANGER=false;
+    SAD=false;
     skullType=0;
   }
   skullDelay++;
@@ -609,12 +628,21 @@ void skullText()
     text("ANGER!", width/2, height/2);
     skullTextFade1--;
   }
+  if (SAD==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("SADNESS!", width/2, height/2);
+    skullTextFade1--;
+  }
 }
 int skullType;
 void skullEffect()
 {
 
-  skullType=round(random(1, 4));
+  skullType=round(random(1, 5));
+  //skullType=5;
 
   if (skullType==2)
   {
@@ -643,6 +671,14 @@ void skullEffect()
   {
     println("FEAR!"); 
     FEAR=true;
+  }
+  if (skullType==5)
+  {
+    println("SAD!");
+    headSize=yAxis/24*1;
+    WormHitbox=25;
+    SAD=true;
+    wormOp=200;
   }
 }
 
