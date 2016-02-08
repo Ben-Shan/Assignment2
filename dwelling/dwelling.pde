@@ -120,7 +120,7 @@ void drawWorm()
     strokeWeight(4);
   }
 
-  fill(wormColour,wormOp);
+  fill(wormColour, wormOp);
   rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
 }
@@ -347,22 +347,15 @@ void draw()
     int roof=height*3/20;
     if (ANGER==true)
     {
-      ground=height*13/20;
-      roof=height*7/20;
+      ground=height*16/20;
+      roof=height*4/20;
     }
-    if (ANGER==false)
-    {
-
-      ground=height*17/20;
-      roof=height*3/20;
-    }
-
     if (SAD==true)
     {
       ground=height*18/20;
       roof=height*5/40;
     }
-    if (SAD==false)
+    if (SAD==false&&ANGER==false)
     {
 
       ground=height*17/20;
@@ -641,8 +634,8 @@ int skullType;
 void skullEffect()
 {
 
-  //skullType=round(random(1, 5));
-  skullType=3;
+  skullType=round(random(1, 5));
+  //skullType=3;
 
   if (skullType==2)
   {
