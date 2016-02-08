@@ -347,8 +347,8 @@ void draw()
     int roof=height*3/20;
     if (ANGER==true)
     {
-      ground=height*16/20;
-      roof=height*4/20;
+      ground=height*13/20;
+      roof=height*7/20;
     }
     if (ANGER==false)
     {
@@ -641,8 +641,8 @@ int skullType;
 void skullEffect()
 {
 
-  skullType=round(random(1, 5));
-  //skullType=5;
+  //skullType=round(random(1, 5));
+  skullType=3;
 
   if (skullType==2)
   {
