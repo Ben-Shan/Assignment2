@@ -49,6 +49,7 @@ int randTime;
 boolean timeSpawn=false;
 
 boolean pause=false;
+boolean instructionsUsed=false;
 
 int score=0;
 void setup()
@@ -235,9 +236,13 @@ void draw()
 
   if (keyPressed)
   {
-    if (key == ENTER)
+    if (key == ENTER&&instructionsUsed==true)
     {
       which=2;
+    }
+    if (key == ENTER&&instructionsUsed==false)
+    {
+      which=4;
     }
   }
 
@@ -301,9 +306,13 @@ void draw()
     text("Press Enter to start:", width/2, height/4);
   }
 
+  if (which==4)
+  {
+    Instructions();
+  }
 
 
-  if (which==2)
+  if (which==2&&loadComplete==true)
   {
     background(0, 0, 0);
 
@@ -634,6 +643,7 @@ int skullType;
 void skullEffect()
 {
 
+
   skullType=round(random(1, 5));
   //skullType=3;
 
@@ -685,7 +695,7 @@ void EndScreen()
   if (CMOp==0)
   {
     MOp+=2;
-    if (MOp==250)
+    if (MOp==255)
     {
       CMOp=1;
     }
@@ -706,5 +716,47 @@ void EndScreen()
   textSize(50);
   text("Your survival score:", width/2, height*1/3);
   text(score, width/2, height*4/9);
+}
+int instructionTimer=20;
+int loadOp=255;
+int EOp=0;
+boolean loadComplete=false;
+void Instructions()
+{
+
+  if (instructionTimer==0)
+  {
+
+    instructionsUsed=true;
+  }
+  instructionTimer--;
+  int loadingBar=-instructionTimer*5;
+
+  println(instructionTimer);
+  if (loadingBar>width)
+  {
+    loadOp-=4;
+    EOp++;
+    loadComplete=true;
+  }
+  if (loadOp<0)
+  {
+  }
+  fill(255, loadOp);
+  rect(0, height*19/20, loadingBar, height);
+  if (loadComplete==true)
+  {
+    textAlign(CENTER);
+    fill(255, EOp);
+    text("Enter to Continue:", width/2, height*19/20);
+  }
+  //  if (EOp>0)
+  //  {
+  //    EOp--;
+  //  }
+  //  if (EOp<255)
+  //  {
+  //    EOp++;
+  //  }
 }
 
