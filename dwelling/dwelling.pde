@@ -199,514 +199,88 @@ void draw()
     skulls.add(skull);
   }
 
-  if (loadComplete==false)
+
+
+  //------------------------------------------------Add Time Generating-------------------------------------------------------  
+  randTime=round(random(1, 600 )); // RANDOM TimeBall
+  if (randTime==99)
   {
-    Skull skull_i = new Skull(width*1/5, 255, 0);
-    skulls.add(skull_i);
+    timeSpawn=true;
+  }
+  if (randTime!=99)
+  {
+    timeSpawn=false;
   }
 
-    //------------------------------------------------Add Time Generating-------------------------------------------------------  
-    randTime=round(random(1, 600 )); // RANDOM TimeBall
-    if (randTime==99)
-    {
-      timeSpawn=true;
-    }
-    if (randTime!=99)
-    {
-      timeSpawn=false;
-    }
 
-
-    if (timeSpawn==true)
-    {
-      Time time = new Time(width, timePos, 2);
-      times.add(time);
-    }
-
-    //------------------------------------------------Skull Icon Loader------------------------------------------------------- 
-
-    Skull_bar skull_bar = new Skull_bar(-100, height*2/3);
-    skull_bars.add(skull_bar);
-
-
-
-
-    //--------------------------
-
-    frameRate(60);
-    if (player.isPlaying()==false)
-    {
-      player.rewind();
-      player.play();
-    }
-    background(0);
-
-
-    if (keyPressed)
-    {
-      if (key == ENTER&&instructionsUsed==true)
-      {
-        which=2;
-      }
-      if (key == ENTER&&instructionsUsed==false)
-      {
-        which=4;
-      }
-    }
-
-    if (which==1)
-    {
-      PFont font;
-      font=createFont("Ailerons.ttf", 32);
-
-      PImage bg;
-      if (xAxis==1000)
-      {
-        bg = loadImage("GameMenuSize.jpg");
-        background(bg);
-      }
-      if (xAxis==2000)
-      {
-        bg = loadImage("GameMenu.jpg");
-        background(bg);
-      }
-
-
-
-      textAlign(CENTER);
-      noStroke();
-      textFont(font);
-      smooth();
-      textSize(xAxis/14);
-      fill(100, 0, 0);
-      text("-dwelling-", width/2, height*49/50);
-
-      if (CMOp==0)
-      {
-        MOp+=2;
-        if (MOp==200)
-        {
-          CMOp=1;
-        }
-      } else if (CMOp==1)
-      {
-        MOp-=2;
-        if (MOp==0)
-        {
-          CMOp=0;
-        }
-      }
-
-      fill(0, MOp);
-      rect(0, 0, width*9/30, height);
-      rect(width*41/60, 0, width*9/30, height);
-      rect(0, height-height/8, width, height);
-
-
-
-      textSize(xAxis/30);
-      textAlign(CENTER);
-      noStroke();
-      textFont(font);
-      smooth();
-      float Op=random(0, 255)-100;
-      fill(255, Op);
-      text("Press Enter to start:", width/2, height/4);
-    }
-
-    if (which==4)
-    {
-      Instructions();
-    }
-
-
-    if (which==2&&loadComplete==true)
-    {
-      background(0, 0, 0);
-
-      noStroke();
-
-
-      //--------------------galaxy-----------------------------
-      for (int i = 0; i < xPosition.length; i++) 
-
-      {
-        //fill(round(random(0, 80)), 0, 0);
-        fill(round(random(0, 180)));
-        rect(yPosition[i], xPosition[i], BlockSize[i], BlockSize[i]);
-
-        if (direction[i] == 0) {
-          yPosition[i] += map(BlockSize[i], minBlock, maxBlock, .1, .5);
-        } else {
-          yPosition[i] -= map(BlockSize[i], minBlock, maxBlock, .1, .5);
-        }
-
-        yPosition[i] += 3 + direction[i]; 
-
-        if (yPosition[i] > width + BlockSize[i] || yPosition[i] < +BlockSize[i] || xPosition[i] > height + BlockSize[i])
-        {
-          xPosition[i] = random(0, height);
-          yPosition[i] = +BlockSize[i];
-        }
-        //--------------------galaxy-----------------------------
-        //fill(80, 0, 0);
-        fill(80);
-        rectMode(CORNER);
-        rect(0, 0, width, yAxis/12);
-        rect(0, height-(yAxis/12), width, yAxis/10);
-      }
-
-
-      drawWorm();
-      //drawText(); //Messes with the jumping :(
-
-      int ground=height*17/20;
-      int roof=height*3/20;
-      if (ANGER==true)
-      {
-        ground=height*16/20;
-        roof=height*4/20;
-      }
-      if (SAD==true)
-      {
-        ground=height*18/20;
-        roof=height*5/40;
-      }
-      if (SAD==false&&ANGER==false)
-      {
-
-        ground=height*17/20;
-        roof=height*3/20;
-      }
-
-
-      if (jump==false&&headPos>roof)
-      {
-        headPos-=15;
-      }
-      if (jump==true&&headPos<ground)
-      {
-        headPos+=15;
-      }
-
-      if (pause==false)
-      {
-        for (int i = wormMans.size () - 1; i >= 0; i --)
-        {
-          WormMan go =wormMans.get(i);
-          go.update();
-          go.render();
-        }
-
-        if (skullActivated==false)
-        {
-          for (int i = skulls.size () - 1; i >= 0; i --)
-          {
-            Skull go =skulls.get(i);
-            go.update();
-            go.render();
-          }
-        }
-
-        for (int i = times.size () - 1; i >= 0; i --)
-        {
-          Time go =times.get(i);
-          go.update();
-          go.render();
-        }
-      }
-
-      if (FEAR==true)
-      {
-        fill(0, 160);
-        noStroke();
-        rect(0, 0, width, height);
-      }
-
-
-      //    if(headPos==BadheadPosx)
-      //    {
-      //      dead=true;
-      //    }
-    }
-    //  --------------TIMER-------------------
-    //    int s=0;
-    //    if (which==2)
-    //    {
-    //      s=round(second());
-    //      text(60-s, 50, height-10);
-    //      if (s==59)
-    //      {
-    //        dead=true;
-    //        s=0;
-    //      }
-    //    }
-
-    checkDetect();
-    if (which==2)
-    {
-      checkLife();
-      if (skullActivated==true)
-      {
-        checkActivateSkull();
-      }
-
-      skullText();
-      if (dead==true)
-      {
-
-        which=3;
-      }
-    }
-  }//------END OF DRAW
-  void keyPressed()
+  if (timeSpawn==true)
   {
-    if (key==' ')
+    Time time = new Time(width, timePos, 2);
+    times.add(time);
+  }
+
+  //------------------------------------------------Skull Icon Loader------------------------------------------------------- 
+
+  Skull_bar skull_bar = new Skull_bar(-100, height*2/3);
+  skull_bars.add(skull_bar);
+
+
+
+
+  //--------------------------
+
+  frameRate(60);
+  if (player.isPlaying()==false)
+  {
+    player.rewind();
+    player.play();
+  }
+  background(0);
+
+
+  if (keyPressed)
+  {
+    if (key == ENTER&&instructionsUsed==true)
     {
-      jump=!jump;
+      which=2;
     }
-    if (key=='p')
+    if (key == ENTER&&instructionsUsed==false)
     {
-      pause=!pause;
+      which=4;
     }
   }
 
-  int WormHitbox=30;
-  void checkDetect()
+  if (which==1)
   {
-    if (loadComplete==true)
+    PFont font;
+    font=createFont("Ailerons.ttf", 32);
+
+    PImage bg;
+    if (xAxis==1000)
     {
-      for (int i = wormMans.size () - 1; i >= 0; i --)
-      {
-        WormMan go =wormMans.get(i);
-        if (headPos>height*16/20-WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
-        {
-          //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
-          //    {
-          println("WORKING BOTTOM");
-          wormMans.remove(i);
-          life-=20;
-          if (life==0||life<0)
-          {
-            dead=true;
-          }
-        }
-        if (headPos<height*3/20+WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy<height/2)
-        {
-          println("WORKING TOP");
-          wormMans.remove(i);
-          life-=20;
-          if (life==0||life<0)
-          {
-            dead=true;
-          }
-        }
-      }
-
-      for (int i = skulls.size () - 1; i >= 0; i --)
-      {
-        Skull go =skulls.get(i);
-        if (headPos<height/2+30&&headPos>height/2-30&&go.skullMove<width/2+30&&go.skullMove>width/2-30)
-        {
-          println("SKULL ACTIVATED!!");
-          skullActivated=true;
-          skullCounter++;
-          skulls.remove(i);
-          skullEffect();
-        }
-      }
-
-
-      for (int i = times.size () - 1; i >= 0; i --)
-      {
-        Time go =times.get(i);
-        if (go.timeMove<width/2+WormHitbox&&go.timeMove>width/2-WormHitbox&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
-        {
-          //println("time collected");
-          println("health collected");
-          times.remove(i);
-          if (life<200)
-          {
-            life+=10;
-          }
-        }
-      }
-      fill(255);
-
-
-
-      int m=0;
-      m=millis();
-      int mD=m/1000;
-      if (dead==false)
-      {
-        score=mD*skullCounter;
-      }
-      if (which==2)
-      {
-        textSize(24);
-        text("life:"+life, width*19/20, height*39/40);
-        text("Time Survived: "+mD, width*2/20, height*39/40);
-        text("Skulls Collected: "+skullCounter, width*2/20, height*2/40);
-
-        text("Score: "+score, width*18/20, height*2/40);
-      }
-      if (which==3)
-      {
-        EndScreen();
-      }
+      bg = loadImage("GameMenuSize.jpg");
+      background(bg);
     }
-  }
-  void checkLife()
-  {
+    if (xAxis==2000)
+    {
+      bg = loadImage("GameMenu.jpg");
+      background(bg);
+    }
+
+
+
+    textAlign(CENTER);
     noStroke();
-    fill(85, 255, 0);
-    rectMode(CENTER);
-    rect(width/2, height*19/20, life, 10);
-  }
-  int skullDelay=0;
-  int skullTextFade=0;
-  int skullTextFade1=250;
-  void checkActivateSkull()
-  {
-    if (player1.isPlaying()==false)
-    {
-      player1.rewind();
-      player1.play();
-    }
-
-
-    if (skullDelay==500)
-    {
-      skullActivated=false;
-      skullDelay=0;
-      println("Skulls have returned");
-      skullTextFade=250;
-      skullTextFade1=250;
-
-      Wormspeed=5;
-      headSize=yAxis/12;
-      WormHitbox=30;
-      wormRage=false;
-      wormOp=255;
-      FEAR=false;
-      OW=false;
-      FATIGUE=false;
-      ANGER=false;
-      SAD=false;
-      skullType=0;
-    }
-    skullDelay++;
-  }
-  void skullText()
-  {
-    if (skullTextFade!=0)
-    {
-      textAlign(CENTER);
-      fill(255, skullTextFade);
-      textSize(32);
-      text("The Skulls have returned", width/2, height/2);
-      skullTextFade--;
-    }
-
-    if (OW==true&&skullTextFade1!=0)
-    {
-      textAlign(CENTER);
-      fill(255, skullTextFade1);
-      textSize(45);
-      text("OVERWHELMED!", width/2, height/2);
-      skullTextFade1--;
-    }
-    if (FEAR==true&&skullTextFade1!=0)
-    {
-      textAlign(CENTER);
-      fill(255, skullTextFade1);
-      textSize(45);
-      text("FEAR!", width/2, height/2);
-      skullTextFade1--;
-    }
-    if (FATIGUE==true&&skullTextFade1!=0)
-    {
-      textAlign(CENTER);
-      fill(255, skullTextFade1);
-      textSize(45);
-      text("FATIGUE!", width/2, height/2);
-      skullTextFade1--;
-    }
-    if (ANGER==true&&skullTextFade1!=0)
-    {
-      textAlign(CENTER);
-      fill(255, skullTextFade1);
-      textSize(45);
-      text("ANGER!", width/2, height/2);
-      skullTextFade1--;
-    }
-    if (SAD==true&&skullTextFade1!=0)
-    {
-      textAlign(CENTER);
-      fill(255, skullTextFade1);
-      textSize(45);
-      text("SADNESS!", width/2, height/2);
-      skullTextFade1--;
-    }
-  }
-  int skullType;
-  void skullEffect()
-  {
-
-
-    skullType=round(random(1, 5));
-    //skullType=3;
-
-    if (skullType==2)
-    {
-      println("Overwhelmed!");
-      OW=true;
-      Wormspeed=10;
-    }
-
-    if (skullType==1)
-    {
-      println("FATIGUE!!"); 
-      FATIGUE=true;
-      Wormspeed=2;
-    }
-
-    if (skullType==3)
-    {
-      println("ANGER!"); 
-      ANGER=true;
-      headSize=yAxis/12*2;
-      WormHitbox=55;
-      wormRage=true;
-    }
-
-    if (skullType==4)
-    {
-      println("FEAR!"); 
-      FEAR=true;
-    }
-    if (skullType==5)
-    {
-      println("SAD!");
-      headSize=yAxis/24*1;
-      WormHitbox=25;
-      SAD=true;
-      wormOp=200;
-    }
-  }
-
-  void EndScreen()
-  {
-    PImage bgE;
-
-    bgE = loadImage("GameDeadMenu.png");
-    background(bgE);
+    textFont(font);
+    smooth();
+    textSize(xAxis/14);
+    fill(100, 0, 0);
+    text("-dwelling-", width/2, height*49/50);
 
     if (CMOp==0)
     {
       MOp+=2;
-      if (MOp==255)
+      if (MOp==200)
       {
         CMOp=1;
       }
@@ -720,64 +294,472 @@ void draw()
     }
 
     fill(0, MOp);
-    rect(width/2, height/2, width, height);
+    rect(0, 0, width*9/30, height);
+    rect(width*41/60, 0, width*9/30, height);
+    rect(0, height-height/8, width, height);
 
-    fill(MOp);
+
+
+    textSize(xAxis/30);
     textAlign(CENTER);
-    textSize(50);
-    text("Your survival score:", width/2, height*1/3);
-    text(score, width/2, height*4/9);
+    noStroke();
+    textFont(font);
+    smooth();
+    float Op=random(0, 255)-100;
+    fill(255, Op);
+    text("Press Enter to start:", width/2, height/4);
   }
-  int instructionTimer=20;
-  int loadOp=255;
-  int EOp=0;
-  boolean loadComplete=false;
-  void Instructions()
+
+  if (which==4)
   {
+    Instructions();
+  }
 
-    if (instructionTimer==0)
+  if (which==2&&loadComplete==true)
+  {
+    background(0, 0, 0);
+
+    noStroke();
+
+
+    //--------------------galaxy-----------------------------
+    for (int i = 0; i < xPosition.length; i++) 
+
+    {
+      //fill(round(random(0, 80)), 0, 0);
+      fill(round(random(0, 180)));
+      rect(yPosition[i], xPosition[i], BlockSize[i], BlockSize[i]);
+
+      if (direction[i] == 0) {
+        yPosition[i] += map(BlockSize[i], minBlock, maxBlock, .1, .5);
+      } else {
+        yPosition[i] -= map(BlockSize[i], minBlock, maxBlock, .1, .5);
+      }
+
+      yPosition[i] += 3 + direction[i]; 
+
+      if (yPosition[i] > width + BlockSize[i] || yPosition[i] < +BlockSize[i] || xPosition[i] > height + BlockSize[i])
+      {
+        xPosition[i] = random(0, height);
+        yPosition[i] = +BlockSize[i];
+      }
+      //--------------------galaxy-----------------------------
+      //fill(80, 0, 0);
+      fill(80);
+      rectMode(CORNER);
+      rect(0, 0, width, yAxis/12);
+      rect(0, height-(yAxis/12), width, yAxis/10);
+    }
+
+
+    drawWorm();
+    //drawText(); //Messes with the jumping :(
+
+    int ground=height*17/20;
+    int roof=height*3/20;
+    if (ANGER==true)
+    {
+      ground=height*16/20;
+      roof=height*4/20;
+    }
+    if (SAD==true)
+    {
+      ground=height*18/20;
+      roof=height*5/40;
+    }
+    if (SAD==false&&ANGER==false)
     {
 
-      instructionsUsed=true;
+      ground=height*17/20;
+      roof=height*3/20;
     }
-    instructionTimer--;
-    int loadingBar=-instructionTimer*5;
 
-    println(instructionTimer);
-    if (loadingBar>width)
+
+    if (jump==false&&headPos>roof)
     {
-      loadOp-=4;
-      EOp++;
-      loadComplete=true;
+      headPos-=15;
     }
-    if (loadOp<0)
+    if (jump==true&&headPos<ground)
     {
+      headPos+=15;
     }
-    fill(255, loadOp);
-    rect(0, height*19/20, loadingBar, height);
-    if (loadComplete==true)
+
+    if (pause==false)
     {
-      textAlign(CENTER);
-      fill(255, EOp);
-      text("Enter to Continue:", width/2, height*19/20);
+      for (int i = wormMans.size () - 1; i >= 0; i --)
+      {
+        WormMan go =wormMans.get(i);
+        go.update();
+        go.render();
+      }
+
+      if (skullActivated==false)
+      {
+        for (int i = skulls.size () - 1; i >= 0; i --)
+        {
+          Skull go =skulls.get(i);
+          go.update();
+          go.render();
+        }
+      }
+
+      for (int i = times.size () - 1; i >= 0; i --)
+      {
+        Time go =times.get(i);
+        go.update();
+        go.render();
+      }
+    }
+
+    if (FEAR==true)
+    {
+      fill(0, 160);
+      noStroke();
+      rect(0, 0, width, height);
+    }
+
+
+    //    if(headPos==BadheadPosx)
+    //    {
+    //      dead=true;
+    //    }
+  }
+  //  --------------TIMER-------------------
+  //    int s=0;
+  //    if (which==2)
+  //    {
+  //      s=round(second());
+  //      text(60-s, 50, height-10);
+  //      if (s==59)
+  //      {
+  //        dead=true;
+  //        s=0;
+  //      }
+  //    }
+
+  checkDetect();
+  if (which==2)
+  {
+    checkLife();
+    if (skullActivated==true)
+    {
+      checkActivateSkull();
+    }
+
+    skullText();
+    if (dead==true)
+    {
+
+      which=3;
+    }
+  }
+}//------END OF DRAW
+void keyPressed()
+{
+  if (key==' ')
+  {
+    jump=!jump;
+  }
+  if (key=='p')
+  {
+    pause=!pause;
+  }
+}
+
+int WormHitbox=30;
+void checkDetect()
+{
+  if (loadComplete==true)
+  {
+    for (int i = wormMans.size () - 1; i >= 0; i --)
+    {
+      WormMan go =wormMans.get(i);
+      if (headPos>height*16/20-WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
+      {
+        //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
+        //    {
+        println("WORKING BOTTOM");
+        wormMans.remove(i);
+        life-=20;
+        if (life==0||life<0)
+        {
+          dead=true;
+        }
+      }
+      if (headPos<height*3/20+WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy<height/2)
+      {
+        println("WORKING TOP");
+        wormMans.remove(i);
+        life-=20;
+        if (life==0||life<0)
+        {
+          dead=true;
+        }
+      }
     }
 
     for (int i = skulls.size () - 1; i >= 0; i --)
     {
       Skull go =skulls.get(i);
-      //go.update();
-      go.render();
+      if (headPos<height/2+30&&headPos>height/2-30&&go.skullMove<width/2+30&&go.skullMove>width/2-30)
+      {
+        println("SKULL ACTIVATED!!");
+        skullActivated=true;
+        skullCounter++;
+        skulls.remove(i);
+        skullEffect();
+      }
     }
 
 
+    for (int i = times.size () - 1; i >= 0; i --)
+    {
+      Time go =times.get(i);
+      if (go.timeMove<width/2+WormHitbox&&go.timeMove>width/2-WormHitbox&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
+      {
+        //println("time collected");
+        println("health collected");
+        times.remove(i);
+        if (life<200)
+        {
+          life+=10;
+        }
+      }
+    }
+    fill(255);
 
-    //  if (EOp>0)
-    //  {
-    //    EOp--;
-    //  }
-    //  if (EOp<255)
-    //  {
-    //    EOp++;
-    //  }
+
+
+    int m=0;
+    m=millis();
+    int mD=m/1000;
+    if (dead==false)
+    {
+      score=mD*skullCounter;
+    }
+    if (which==2)
+    {
+      textSize(24);
+      text("life:"+life, width*19/20, height*39/40);
+      text("Time Survived: "+mD, width*2/20, height*39/40);
+      text("Skulls Collected: "+skullCounter, width*2/20, height*2/40);
+
+      text("Score: "+score, width*18/20, height*2/40);
+    }
+    if (which==3)
+    {
+      EndScreen();
+    }
   }
+}
+void checkLife()
+{
+  noStroke();
+  fill(85, 255, 0);
+  rectMode(CENTER);
+  rect(width/2, height*19/20, life, 10);
+}
+int skullDelay=0;
+int skullTextFade=0;
+int skullTextFade1=250;
+void checkActivateSkull()
+{
+  if (player1.isPlaying()==false)
+  {
+    player1.rewind();
+    player1.play();
+  }
+
+
+  if (skullDelay==500)
+  {
+    skullActivated=false;
+    skullDelay=0;
+    println("Skulls have returned");
+    skullTextFade=250;
+    skullTextFade1=250;
+
+    Wormspeed=5;
+    headSize=yAxis/12;
+    WormHitbox=30;
+    wormRage=false;
+    wormOp=255;
+    FEAR=false;
+    OW=false;
+    FATIGUE=false;
+    ANGER=false;
+    SAD=false;
+    skullType=0;
+  }
+  skullDelay++;
+}
+void skullText()
+{
+  if (skullTextFade!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade);
+    textSize(32);
+    text("The Skulls have returned", width/2, height/2);
+    skullTextFade--;
+  }
+
+  if (OW==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("OVERWHELMED!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (FEAR==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("FEAR!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (FATIGUE==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("FATIGUE!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (ANGER==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("ANGER!", width/2, height/2);
+    skullTextFade1--;
+  }
+  if (SAD==true&&skullTextFade1!=0)
+  {
+    textAlign(CENTER);
+    fill(255, skullTextFade1);
+    textSize(45);
+    text("SADNESS!", width/2, height/2);
+    skullTextFade1--;
+  }
+}
+int skullType;
+void skullEffect()
+{
+
+
+  skullType=round(random(1, 5));
+  //skullType=3;
+
+  if (skullType==2)
+  {
+    println("Overwhelmed!");
+    OW=true;
+    Wormspeed=10;
+  }
+
+  if (skullType==1)
+  {
+    println("FATIGUE!!"); 
+    FATIGUE=true;
+    Wormspeed=2;
+  }
+
+  if (skullType==3)
+  {
+    println("ANGER!"); 
+    ANGER=true;
+    headSize=yAxis/12*2;
+    WormHitbox=55;
+    wormRage=true;
+  }
+
+  if (skullType==4)
+  {
+    println("FEAR!"); 
+    FEAR=true;
+  }
+  if (skullType==5)
+  {
+    println("SAD!");
+    headSize=yAxis/24*1;
+    WormHitbox=25;
+    SAD=true;
+    wormOp=200;
+  }
+}
+
+void EndScreen()
+{
+  PImage bgE;
+
+  bgE = loadImage("GameDeadMenu.png");
+  background(bgE);
+
+  if (CMOp==0)
+  {
+    MOp+=2;
+  }
+  if (MOp>=255)
+  {
+    CMOp=1;
+  }
+
+  if (CMOp==1)
+  {
+    MOp-=2;
+    if (MOp<=0)
+    {
+      CMOp=0;
+    }
+  }
+
+  fill(0, MOp);
+  rect(width/2, height/2, width, height);
+
+  fill(MOp);
+  textAlign(CENTER);
+  textSize(50);
+  text("Your survival score:", width/2, height*1/3);
+  text(score, width/2, height*4/9);
+}
+int instructionTimer=20;
+int loadOp=255;
+int EOp=0;
+boolean loadComplete=false;
+void Instructions()
+{
+
+  if (instructionTimer==0)
+  {
+
+    instructionsUsed=true;
+  }
+  instructionTimer--;
+  int loadingBar=-instructionTimer*5;
+
+  println(instructionTimer);
+  if (loadingBar>width)
+  {
+    loadOp-=4;
+    EOp++;
+    loadComplete=true;
+  }
+  if (loadOp<0)
+  {
+  }
+  fill(255, loadOp);
+  rect(0, height*19/20, loadingBar, height);
+  if (loadComplete==true)
+  {
+    textAlign(CENTER);
+    fill(255, EOp);
+    text("Enter to Continue:", width/2, height*19/20);
+  }
+  
+  
+
+}
 
