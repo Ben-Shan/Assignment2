@@ -451,6 +451,15 @@ void draw()
     {
 
       which=3;
+//      dead = false;
+//      dead=false;
+//      FEAR=false;
+//      OW=false;
+//      ANGER=false;
+//      SAD=false;
+//      FATIGUE=false;
+//
+//      int life=200;
     }
   }
 }//------END OF DRAW
@@ -554,7 +563,13 @@ void checkDetect()
 }
 void checkLife()
 {
-  noStroke();
+  //strokeWeight(5);
+  //stroke(0,100,0);
+  if(life<50)
+  {
+    stroke(0,round(random(0,255)),0);
+    strokeWeight(5);
+  }
   fill(85, 255, 0);
   rectMode(CENTER);
   rect(width/2, height*19/20, life, 10);
@@ -757,8 +772,10 @@ void Instructions()
     textAlign(CENTER);
     fill(255, EOp);
     text("Enter to Continue:", width/2, height*19/20);
+    
   }
-  
+
+
   
 
 }
