@@ -201,6 +201,7 @@ void draw()
 
 
 
+
   //------------------------------------------------Add Time Generating-------------------------------------------------------  
   randTime=round(random(1, 600 )); // RANDOM TimeBall
   if (randTime==99)
@@ -243,6 +244,7 @@ void draw()
     if (key == ENTER&&instructionsUsed==true)
     {
       which=2;
+      pause=false;
     }
     if (key == ENTER&&instructionsUsed==false)
     {
@@ -313,6 +315,7 @@ void draw()
   if (which==4)
   {
     Instructions();
+    pause=true;
   }
 
   if (which==2&&loadComplete==true)
@@ -451,15 +454,15 @@ void draw()
     {
 
       which=3;
-//      dead = false;
-//      dead=false;
-//      FEAR=false;
-//      OW=false;
-//      ANGER=false;
-//      SAD=false;
-//      FATIGUE=false;
-//
-//      int life=200;
+      //      dead = false;
+      //      dead=false;
+      //      FEAR=false;
+      //      OW=false;
+      //      ANGER=false;
+      //      SAD=false;
+      //      FATIGUE=false;
+      //
+      //      int life=200;
     }
   }
 }//------END OF DRAW
@@ -565,9 +568,9 @@ void checkLife()
 {
   //strokeWeight(5);
   //stroke(0,100,0);
-  if(life<50)
+  if (life<100&&dead==false)
   {
-    stroke(0,round(random(0,255)),0);
+    stroke(0, round(random(0, 255)), 0);
     strokeWeight(5);
   }
   fill(85, 255, 0);
@@ -744,10 +747,52 @@ int instructionTimer=20;
 int loadOp=255;
 int EOp=0;
 boolean loadComplete=false;
+int starwars=0;
+int starwarsfade=255;
+int starwarswhich=1;
 void Instructions()
 {
+  fill(255, starwarsfade);
+  if (starwarswhich==1)
+  {
+    text("Skulls alter your memory, mostly for bad.\nHowever they also act as score multipliers so dont miss them!", width/2, starwars);
+  }
+  if (starwarswhich==2)
+  {
+    text("Health orbs, when collected, add additional life.\nHowever they only count for half of what a worm will take away!", width/2, starwars);
+  }
+  if (starwarswhich==3)
+  {
+    text("Worms are easy to avoid and inflict small damage.\n But in a group can be deadly!", width/2, starwars);
+  }
 
-  if (instructionTimer==0)
+  starwars++;
+  if (starwars>height*2/5)
+  {
+    starwarsfade--;
+  }
+  if (starwarsfade==0&&starwarswhich==1)
+  {
+    starwarswhich=2;
+    starwarsfade=255;
+    starwars=0;
+  }
+  if (starwarsfade==0&&starwarswhich==2)
+  {
+    starwarswhich=3;
+    starwarsfade=255;
+    starwars=0;
+  }
+  if (starwarsfade==0&&starwarswhich==3)
+  {
+    starwarswhich=1;
+    starwarsfade=255;
+    starwars=0;
+  }
+
+
+
+  if (EOp==160)
   {
 
     instructionsUsed=true;
@@ -772,11 +817,6 @@ void Instructions()
     textAlign(CENTER);
     fill(255, EOp);
     text("Enter to Continue:", width/2, height*19/20);
-    
   }
-
-
-  
-
 }
 
