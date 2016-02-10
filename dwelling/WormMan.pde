@@ -60,37 +60,37 @@ class WormMan
     BadtailPosx=BadheadPosx+(width/15);
     //BadtailPosy=BadheadPosy;
 
-//    if (BadbodyPosy<=headTop)
-//    {
-//      up=true;
-//    }
-//    if (BadbodyPosy>=headBottom)
-//    {
-//      up=false;
-//    }
+    //    if (BadbodyPosy<=headTop)
+    //    {
+    //      up=true;
+    //    }
+    //    if (BadbodyPosy>=headBottom)
+    //    {
+    //      up=false;
+    //    }
 
-    if (up==false)
-    {
-      for (int i=0; i<3; i++)
-      {
-        if (i==3)
-        {
-          i=0;
-          up=true;
-        }
-      }
-    }
-        if (up==true)
-    {
-      for (int i=0; i<3; i++)
-      {
-        if (i==3)
-        {
-          i=0;
-          up=false;
-        }
-      }
-    }
+//    if (up==false)
+//    {
+//      for (int i=0; i<3; i++)
+//      {
+//        if (i==3)
+//        {
+//          i=0;
+//          up=true;
+//        }
+//      }
+//    }
+//    if (up==true)
+//    {
+//      for (int i=0; i<3; i++)
+//      {
+//        if (i==3)
+//        {
+//          i=0;
+//          up=false;
+//        }
+//      }
+//    }
 
 
     if (up==true)
@@ -98,12 +98,14 @@ class WormMan
 
       BadbodyPosy-=2;
       BadtailPosy+=1;
+      up=false;
     }
     if (up==false)
     {
 
       BadbodyPosy+=2;
       BadtailPosy-=1;
+      up=true;
     }
   }
 
