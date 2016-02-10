@@ -258,7 +258,6 @@ void draw()
       life=200;
       skullCounter=0;
       score=0;
-      
     }
   }
 
@@ -447,7 +446,6 @@ void draw()
     {
       pause=true;
       which=3;
-
     }
   }
 }//------END OF DRAW
@@ -750,6 +748,10 @@ void Instructions()
   {
     text("Worms are easy to avoid and inflict small damage.\n But in a group can be deadly!", width/2, starwars);
   }
+  if (starwarswhich==3)
+  {
+    text("Worms tails wont cause damage.\nUse this to your advantage!", width/2, starwars);
+  }
 
   starwars++;
   if (starwars>height*3/10)
@@ -770,10 +772,17 @@ void Instructions()
   }
   if (starwarsfade==0&&starwarswhich==2)
   {
+    starwarswhich=3;
+    starwarsfade=255;
+    starwars=0;
+  }
+  if (starwarsfade==0&&starwarswhich==3)
+  {
     starwarswhich=0;
     starwarsfade=255;
     starwars=0;
   }
+
 
 
 

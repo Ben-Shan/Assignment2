@@ -60,52 +60,77 @@ class WormMan
     BadtailPosx=BadheadPosx+(width/15);
     //BadtailPosy=BadheadPosy;
 
-    //    if (BadbodyPosy<=headTop)
+    if (BadtailPosy==BadheadPosy-BadheadSize/5)
+    {
+      up=true;
+    }
+    if (BadtailPosy==BadheadPosy+BadheadSize/5)
+    {
+      up=false;
+    }
+
+    //    if (up==false)
     //    {
-    //      up=true;
+    //      for (int i=0; i<3; i++)
+    //      {
+    //        if (i==3)
+    //        {
+    //          i=0;
+    //          up=true;
+    //        }
+    //      }
     //    }
-    //    if (BadbodyPosy>=headBottom)
+    //    if (up==true)
     //    {
-    //      up=false;
+    //      for (int i=0; i<3; i++)
+    //      {
+    //        if (i==3)
+    //        {
+    //          i=0;
+    //          up=false;
+    //        }
+    //      }
     //    }
 
-//    if (up==false)
-//    {
-//      for (int i=0; i<3; i++)
-//      {
-//        if (i==3)
-//        {
-//          i=0;
-//          up=true;
-//        }
-//      }
-//    }
-//    if (up==true)
-//    {
-//      for (int i=0; i<3; i++)
-//      {
-//        if (i==3)
-//        {
-//          i=0;
-//          up=false;
-//        }
-//      }
-//    }
 
+    //    if (up==true)
+    //    {
+    //      for (int i=0; i<4; i++)
+    //      {
+    //        BadbodyPosy-=2;
+    //        BadtailPosy+=1;
+    //        if (i==3)
+    //        {
+    //          up=false;
+    //          //i=0;
+    //        }
+    //      }
+    //    }
+    //    if (up==false)
+    //    {
+    //
+    //      for (int i=0; i<4; i++)
+    //      {
+    //        BadbodyPosy+=2;
+    //        BadtailPosy-=1;
+    //        if (i==3)
+    //        {
+    //          up=true;
+    //          //i=0;
+    //        }
+    //      }
+    //    
+    //    }
 
     if (up==true)
     {
-
       BadbodyPosy-=2;
       BadtailPosy+=1;
-      up=false;
     }
     if (up==false)
     {
-
       BadbodyPosy+=2;
       BadtailPosy-=1;
-      up=true;
     }
   }
 
