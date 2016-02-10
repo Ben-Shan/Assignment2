@@ -51,14 +51,14 @@ class WormMan
     println(BadtailPosx);
 
     BadbodySize=BadheadSize*2/3;
-    //int BadbodyPosx=BadheadPosx+(width/25);
+
     BadbodyPosx=BadheadPosx+(width/25);
-    //BadbodyPosy=BadheadPosy;
+
 
     BadtailSize=BadheadSize*1/3;
-    //int BadtailPosx=BadheadPosx+(width/15);
+
     BadtailPosx=BadheadPosx+(width/15);
-    //BadtailPosy=BadheadPosy;
+
 
     if (BadtailPosy==BadheadPosy-BadheadSize/5)
     {
@@ -68,59 +68,6 @@ class WormMan
     {
       up=false;
     }
-
-    //    if (up==false)
-    //    {
-    //      for (int i=0; i<3; i++)
-    //      {
-    //        if (i==3)
-    //        {
-    //          i=0;
-    //          up=true;
-    //        }
-    //      }
-    //    }
-    //    if (up==true)
-    //    {
-    //      for (int i=0; i<3; i++)
-    //      {
-    //        if (i==3)
-    //        {
-    //          i=0;
-    //          up=false;
-    //        }
-    //      }
-    //    }
-
-
-    //    if (up==true)
-    //    {
-    //      for (int i=0; i<4; i++)
-    //      {
-    //        BadbodyPosy-=2;
-    //        BadtailPosy+=1;
-    //        if (i==3)
-    //        {
-    //          up=false;
-    //          //i=0;
-    //        }
-    //      }
-    //    }
-    //    if (up==false)
-    //    {
-    //
-    //      for (int i=0; i<4; i++)
-    //      {
-    //        BadbodyPosy+=2;
-    //        BadtailPosy-=1;
-    //        if (i==3)
-    //        {
-    //          up=true;
-    //          //i=0;
-    //        }
-    //      }
-    //    
-    //    }
 
     if (up==true)
     {

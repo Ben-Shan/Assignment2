@@ -468,7 +468,13 @@ void checkDetect()
   {
     for (int i = wormMans.size () - 1; i >= 0; i --)
     {
+
+
       WormMan go =wormMans.get(i);
+      if (go.BadheadPosx<=-10)
+      {
+        wormMans.remove(i);
+      }
       if (headPos>height*16/20-WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
       {
         //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
