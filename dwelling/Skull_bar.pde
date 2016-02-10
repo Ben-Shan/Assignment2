@@ -1,4 +1,4 @@
-class Skull_bar
+class Skull_bar //un used
 {
   float Iconx=-100;
   float Icony=height*2/3;

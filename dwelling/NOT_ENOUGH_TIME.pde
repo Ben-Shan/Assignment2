@@ -11,14 +11,14 @@ class Time
   int expand;
   int expandOp;
 
-  Time(float timeMove, float timeBounce, int timeSpeed)
+  Time(float timeMove, float timeBounce, int timeSpeed)//takes in required variables
   {
     this.timeMove=timeMove;
     this.timeSpeed=timeSpeed;
   }
 
 
-  void update()
+  void update()//makes ball bounce on ground and roof
   {
     timeMove-=timeSpeed/2;
     if (timeBounce>height-70)
@@ -55,9 +55,9 @@ class Time
     //fill(51,51,255,expandOp);
     strokeWeight(5);
     ellipse(timeMove, timeBounce, expand, expand);
-    expand++;
+    expand++;//throbbong of ball
     expandOp-=1;
-    if (expand>100)
+    if (expand>100)//resets throb
     {
       expand=40;
       expandOp=100;

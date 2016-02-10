@@ -36,7 +36,7 @@ class Skull
   {
     fill(skullCol);
     ellipse(skullMove, height/2, 10, 10);
-
+//skull rotation
     pushMatrix();
     translate(skullMove, height/2);
     rotate(radians(skullRotate));
@@ -51,6 +51,7 @@ class Skull
     ellipse(-skullbounce2, skullbounce2, 5, 5);
     popMatrix();
     skullRotate+=1;
+    //skull balls expandinf
     if (skullIn==false)
     {
       skullbounce++;

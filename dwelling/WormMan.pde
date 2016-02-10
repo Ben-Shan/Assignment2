@@ -49,7 +49,7 @@ class WormMan
 
     println(BadheadSize*2/3);
     println(BadtailPosx);
-
+//---------tail banter
     BadbodySize=BadheadSize*2/3;
 
     BadbodyPosx=BadheadPosx+(width/25);
@@ -87,13 +87,13 @@ class WormMan
     fill(100, 0, 0);
     noStroke();
     rectMode(CENTER);
-    rect(BadheadPosx, BadheadPosy, BadheadSize, BadheadSize);
+    rect(BadheadPosx, BadheadPosy, BadheadSize, BadheadSize); //head
 
 
 
     rectMode(CENTER);
-    rect(BadtailPosx, BadtailPosy, BadtailSize, BadtailSize);
-    rect(BadbodyPosx, BadbodyPosy, BadbodySize, BadbodySize);
+    rect(BadtailPosx, BadtailPosy, BadtailSize, BadtailSize);//tail
+    rect(BadbodyPosx, BadbodyPosy, BadbodySize, BadbodySize); //body
     rectMode(CORNER);
 
 

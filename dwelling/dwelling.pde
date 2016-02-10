@@ -58,7 +58,7 @@ void setup()
   size(xAxis, yAxis);
 
   minim = new Minim(this);
-  player = minim.loadFile("Gamemusic.mp3", 1048);
+  player = minim.loadFile("Gamemusic.mp3", 1048); //inputs audio 
 
 
   minim = new Minim(this);
@@ -101,8 +101,7 @@ int wormColour=255;
 boolean wormRage=false;
 int wormOp=255;
 
-//int headCentrex=width/2;
-//int headCentrey=headPos
+
 
 void drawWorm()
 {
@@ -125,20 +124,7 @@ void drawWorm()
   rectMode(CENTER);
   rect(width/2, headPos, headSize, headSize, 5); //5 at end makes corners curved
 }
-void drawText()
-{
-  PFont font;
-  font=createFont("Ailerons.ttf", 32);
 
-  textSize(32);
-  textAlign(CENTER);
-  noStroke();
-  textFont(font);
-  smooth();
-
-  fill(255);
-  text("Press spacebar to alter gravity", width/2, height/4);
-}
 
 int which=1;
 boolean fade;
@@ -162,7 +148,7 @@ void draw()
 
   if (wormSpawn==true)
   {
-    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, Wormspeed);
+    WormMan wormMan = new WormMan(yAxis/12, height*17/20, width, Wormspeed); //loads worm in from class, ground
     wormMans.add(wormMan);
   }
 
@@ -177,7 +163,7 @@ void draw()
 
   if (wormSpawn2==true)
   {
-    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, Wormspeed );
+    WormMan wormMan = new WormMan(yAxis/12, height*3/20, width, Wormspeed ); //loads worm in from class, roof
     wormMans.add(wormMan);
   }
 
@@ -195,7 +181,7 @@ void draw()
 
   if (skullSpawn==true)
   {
-    Skull skull = new Skull(width, 255, 2);
+    Skull skull = new Skull(width, 255, 2); //loads skull in from class
     skulls.add(skull);
   }
 
@@ -216,19 +202,11 @@ void draw()
 
   if (timeSpawn==true)
   {
-    Time time = new Time(width, timePos, 2);
+    Time time = new Time(width, timePos, 2); //loads health in from class
     times.add(time);
   }
 
-  //------------------------------------------------Skull Icon Loader------------------------------------------------------- 
 
-  Skull_bar skull_bar = new Skull_bar(-100, height*2/3);
-  skull_bars.add(skull_bar);
-
-
-
-
-  //--------------------------
 
   frameRate(60);
   if (player.isPlaying()==false)
@@ -241,12 +219,12 @@ void draw()
 
   if (keyPressed)
   {
-    if (key == ENTER&&instructionsUsed==true)
+    if (key == ENTER&&instructionsUsed==true) //when on instruction screen and enter is pressed, go to game
     {
       which=2;
       pause=false;
     }
-    if (key == ENTER&&instructionsUsed==false)
+    if (key == ENTER&&instructionsUsed==false)// when on intro screen and enter is pressed, go to instructions
     {
       which=4;
     }
@@ -261,7 +239,7 @@ void draw()
     }
   }
 
-  if (which==1)
+  if (which==1)//intro screen
   {
     PFont font;
     font=createFont("Ailerons.ttf", 32);
@@ -288,7 +266,7 @@ void draw()
     fill(100, 0, 0);
     text("-dwelling-", width/2, height*49/50);
 
-    if (CMOp==0)
+    if (CMOp==0) //Opacity of darkness 
     {
       MOp+=2;
       if (MOp==200)
@@ -316,14 +294,14 @@ void draw()
     noStroke();
     textFont(font);
     smooth();
-    float Op=random(0, 255)-100;
+    float Op=random(0, 255)-100; //enter flicker
     fill(255, Op);
     text("Press Enter to start:", width/2, height/4);
   }
 
-  if (which==4)
+  if (which==4)//instructions screen
   {
-    Instructions();
+    Instructions(); //calls Instructions
     pause=true;
   }
 
@@ -364,8 +342,9 @@ void draw()
     }
 
 
-    drawWorm();
-    //drawText(); //Messes with the jumping :(
+//main game code
+    drawWorm(); 
+
 
     int ground=height*17/20;
     int roof=height*3/20;
@@ -451,7 +430,7 @@ void draw()
 }//------END OF DRAW
 void keyPressed()
 {
-  if (key==' ')
+  if (key==' ') //jumping animation
   {
     jump=!jump;
   }
@@ -462,7 +441,7 @@ void keyPressed()
 }
 
 int WormHitbox=30;
-void checkDetect()
+void checkDetect() //hit dectection
 {
   if (loadComplete==true)
   {
@@ -471,18 +450,18 @@ void checkDetect()
 
 
       WormMan go =wormMans.get(i);
+      
       if (go.BadheadPosx<=-10)
       {
-        wormMans.remove(i);
+        wormMans.remove(i);// removes worms as they leave screen
       }
       if (headPos>height*16/20-WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy>height/2)
       {
-        //    if (go.BadheadPosx<width/2+20&&go.BadheadPosx>width/2-20&&go.BadheadPosy>headPos&&go.BadheadPosy<headPos+headSize )
-        //    {
+
         println("WORKING BOTTOM");
-        wormMans.remove(i);
+        wormMans.remove(i); //removed when hit worm
         life-=20;
-        if (life==0||life<0)
+        if (life==0||life<0)//if out of health, die!
         {
           dead=true;
         }
@@ -490,16 +469,16 @@ void checkDetect()
       if (headPos<height*3/20+WormHitbox&&go.BadheadPosx<width/2+WormHitbox&&go.BadheadPosx>width/2-WormHitbox&&go.BadheadPosy<height/2)
       {
         println("WORKING TOP");
-        wormMans.remove(i);
+        wormMans.remove(i);//removed when hit worm
         life-=20;
-        if (life==0||life<0)
+        if (life==0||life<0)//dying yep
         {
           dead=true;
         }
       }
     }
 
-    for (int i = skulls.size () - 1; i >= 0; i --)
+    for (int i = skulls.size () - 1; i >= 0; i --) //skull array
     {
       Skull go =skulls.get(i);
       if (headPos<height/2+30&&headPos>height/2-30&&go.skullMove<width/2+30&&go.skullMove>width/2-30)
@@ -507,20 +486,20 @@ void checkDetect()
         println("SKULL ACTIVATED!!");
         skullActivated=true;
         skullCounter++;
-        skulls.remove(i);
+        skulls.remove(i);//skulls removed when caught
         skullEffect();
       }
     }
 
 
-    for (int i = times.size () - 1; i >= 0; i --)
+    for (int i = times.size () - 1; i >= 0; i --)//health array
     {
       Time go =times.get(i);
       if (go.timeMove<width/2+WormHitbox&&go.timeMove>width/2-WormHitbox&&go.timeBounce>headPos&&go.timeBounce<headPos+headSize )
       {
         //println("time collected");
         println("health collected");
-        times.remove(i);
+        times.remove(i);//ball removed when picked up
         if (life<200)
         {
           life+=10;
@@ -533,12 +512,12 @@ void checkDetect()
 
     int m=0;
     m=millis();
-    int mD=m/1000;
+    int mD=m/1000;//only shows seconds, not milis
     if (dead==false)
     {
-      score=mD*skullCounter;
+      score=mD*skullCounter;//score = time*skulls collected
     }
-    if (which==2)
+    if (which==2)//main game text
     {
       textSize(24);
       text("life:"+life, width*19/20, height*39/40);
@@ -547,7 +526,7 @@ void checkDetect()
 
       text("Score: "+score, width*18/20, height*2/40);
     }
-    if (which==3)
+    if (which==3)//dead screen
     {
       EndScreen();
     }
@@ -559,7 +538,7 @@ void checkLife()
   //stroke(0,100,0);
   if (life<100&&dead==false)
   {
-    stroke(0, 0, 0,round(random(0, 255))ser);
+    stroke(0, 0, 0,round(random(0, 255)));
     strokeWeight(5);
   }
   fill(85, 255, 0);
@@ -571,16 +550,16 @@ int skullTextFade=0;
 int skullTextFade1=250;
 void checkActivateSkull()
 {
-  if (player1.isPlaying()==false)
+  if (player1.isPlaying()==false)//skull sound
   {
     player1.rewind();
     player1.play();
   }
 
 
-  if (skullDelay==500)
+  if (skullDelay==500)//skull activation time
   {
-    skullActivated=false;
+    skullActivated=false;      //resets all variables possibly changed during skulls after skull
     skullDelay=0;
     println("Skulls have returned");
     skullTextFade=250;
@@ -600,7 +579,7 @@ void checkActivateSkull()
   }
   skullDelay++;
 }
-void skullText()
+void skullText()//text for all skulls, required for text to stay on screen and fade
 {
   if (skullTextFade!=0)
   {
@@ -653,7 +632,7 @@ void skullText()
   }
 }
 int skullType;
-void skullEffect()
+void skullEffect()//for the effects of skulls, changes game elements
 {
 
 
@@ -698,14 +677,14 @@ void skullEffect()
   }
 }
 
-void EndScreen()
+void EndScreen()//dead screen 
 {
   PImage bgE;
 
   bgE = loadImage("GameDeadMenu.png");
   background(bgE);
 
-  if (CMOp==0)
+  if (CMOp==0)//end screen fading
   {
     MOp+=2;
   }
@@ -740,10 +719,10 @@ int starwars=-10;
 int starwarsfade=255;
 int starwarswhich=round(random(0, 2));
 
-void Instructions()
+void Instructions()//instructions page code
 {
 
-
+  //different tips, scroll down screen fading as they go, in order, starting at random tip and looping
   fill(255, starwarsfade);
   if (starwarswhich==0)
   {
@@ -792,12 +771,12 @@ void Instructions()
     starwars=0;
   }
 
-  if (EOp==160)
+  if (EOp==160)//stops enter being pressed before ready
   {
 
     instructionsUsed=true;
   }
-  if (EOp<255)
+  if (EOp<255)//fades load bar
   {
     instructionTimer--;
   }
@@ -813,11 +792,11 @@ void Instructions()
 
   fill(255, loadOp);
   rect(0, height*19/20, loadingBar, height);
-  if (loadComplete==true)
+  if (loadComplete==true)//fades in continue text when bar is full
   {
     textAlign(CENTER);
     fill(255, EOp);
-    text("Enter to Continue:", width/2, height*19/20);
+    text("Enter to Continue:", width/2, height*19/20); 
   }
 
   fill(0);

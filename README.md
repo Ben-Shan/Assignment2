@@ -1,4 +1,4 @@
-# Assignment2
+# Ben Shanahan - C14347291 - Assignment2
 Game Creation
 
 /*Memories can be good things, but also be bad, use them as a pick up, when feeling sad. But memories, if left, to fester and stew can lead to depression, 
@@ -16,3 +16,4 @@ Game Creation
  Life balls are throbbing balls of hope in the dark mind you reside, pick them up to gain health, however they will only give you 1/2 as much health as the worms will take away, so don't be too reliant on them!!
  
  All music and graphics were made by myself in FL Studios and Photoshop, repectively.
+ Hope you enjoy!
