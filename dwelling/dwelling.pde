@@ -250,6 +250,16 @@ void draw()
     {
       which=4;
     }
+    if (key == ENTER&&dead==true&&which==3)
+    {
+      //setup();
+      dead=false;
+      which=2;
+      life=200;
+      skullCounter=0;
+      score=0;
+      
+    }
   }
 
   if (which==1)
@@ -420,25 +430,8 @@ void draw()
       noStroke();
       rect(0, 0, width, height);
     }
-
-
-    //    if(headPos==BadheadPosx)
-    //    {
-    //      dead=true;
-    //    }
   }
-  //  --------------TIMER-------------------
-  //    int s=0;
-  //    if (which==2)
-  //    {
-  //      s=round(second());
-  //      text(60-s, 50, height-10);
-  //      if (s==59)
-  //      {
-  //        dead=true;
-  //        s=0;
-  //      }
-  //    }
+
 
   checkDetect();
   if (which==2)
@@ -452,17 +445,9 @@ void draw()
     skullText();
     if (dead==true)
     {
-
+      pause=true;
       which=3;
-      //      dead = false;
-      //      dead=false;
-      //      FEAR=false;
-      //      OW=false;
-      //      ANGER=false;
-      //      SAD=false;
-      //      FATIGUE=false;
-      //
-      //      int life=200;
+
     }
   }
 }//------END OF DRAW
@@ -747,29 +732,35 @@ int instructionTimer=20;
 int loadOp=255;
 int EOp=0;
 boolean loadComplete=false;
-int starwars=0;
+int starwars=-10;
 int starwarsfade=255;
-int starwarswhich=1;
+int starwarswhich=round(random(0, 2));
 void Instructions()
 {
   fill(255, starwarsfade);
-  if (starwarswhich==1)
+  if (starwarswhich==0)
   {
     text("Skulls alter your memory, mostly for bad.\nHowever they also act as score multipliers so dont miss them!", width/2, starwars);
   }
-  if (starwarswhich==2)
+  if (starwarswhich==1)
   {
     text("Health orbs, when collected, add additional life.\nHowever they only count for half of what a worm will take away!", width/2, starwars);
   }
-  if (starwarswhich==3)
+  if (starwarswhich==2)
   {
     text("Worms are easy to avoid and inflict small damage.\n But in a group can be deadly!", width/2, starwars);
   }
 
   starwars++;
-  if (starwars>height*2/5)
+  if (starwars>height*3/10)
   {
     starwarsfade--;
+  }
+  if (starwarsfade==0&&starwarswhich==0)
+  {
+    starwarswhich=1;
+    starwarsfade=255;
+    starwars=0;
   }
   if (starwarsfade==0&&starwarswhich==1)
   {
@@ -779,13 +770,7 @@ void Instructions()
   }
   if (starwarsfade==0&&starwarswhich==2)
   {
-    starwarswhich=3;
-    starwarsfade=255;
-    starwars=0;
-  }
-  if (starwarsfade==0&&starwarswhich==3)
-  {
-    starwarswhich=1;
+    starwarswhich=0;
     starwarsfade=255;
     starwars=0;
   }
@@ -797,7 +782,10 @@ void Instructions()
 
     instructionsUsed=true;
   }
-  instructionTimer--;
+  if (EOp<255)
+  {
+    instructionTimer--;
+  }
   int loadingBar=-instructionTimer*5;
 
   println(instructionTimer);
@@ -807,9 +795,7 @@ void Instructions()
     EOp++;
     loadComplete=true;
   }
-  if (loadOp<0)
-  {
-  }
+
   fill(255, loadOp);
   rect(0, height*19/20, loadingBar, height);
   if (loadComplete==true)
