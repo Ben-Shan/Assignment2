@@ -559,7 +559,7 @@ void checkLife()
   //stroke(0,100,0);
   if (life<100&&dead==false)
   {
-    stroke(0, round(random(0, 255)), 0);
+    stroke(0, 0, 0,round(random(0, 255))ser);
     strokeWeight(5);
   }
   fill(85, 255, 0);
@@ -739,8 +739,11 @@ boolean loadComplete=false;
 int starwars=-10;
 int starwarsfade=255;
 int starwarswhich=round(random(0, 2));
+
 void Instructions()
 {
+
+
   fill(255, starwarsfade);
   if (starwarswhich==0)
   {
@@ -789,9 +792,6 @@ void Instructions()
     starwars=0;
   }
 
-
-
-
   if (EOp==160)
   {
 
@@ -819,5 +819,10 @@ void Instructions()
     fill(255, EOp);
     text("Enter to Continue:", width/2, height*19/20);
   }
+
+  fill(0);
+  rect(0, 0, width, height*4/40);
+  fill(255);
+  text("Tips:", width/2, height*3/40);
 }
 

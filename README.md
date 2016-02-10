@@ -14,3 +14,5 @@ Game Creation
  Red Worms crawl along the ground and the ceiling, damaging your memory when touched, Get hit by too many and your memory will be corupted forever!
  
  Life balls are throbbing balls of hope in the dark mind you reside, pick them up to gain health, however they will only give you 1/2 as much health as the worms will take away, so don't be too reliant on them!!
+ 
+ All music and graphics were made by myself in FL Studios and Photoshop, repectively.
